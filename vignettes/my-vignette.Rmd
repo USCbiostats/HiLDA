@@ -77,36 +77,53 @@ G <- hildaReadMPFile(inputFile, numBases=5, trDir=TRUE)
 ```
 
 ```{r}
-inputFile <- system.file("sample/sample.rdata", package = "HiLDA")
+inputFile <- system.file("extdata/sample.rdata", package = "HiLDA")
+load(inputFile)
 ```
 
 ## Run tests from `HiLDA`
 ### Generate the initial values and run the global test (Bayes Factor) and the local test 
-```{r}
+```{r eval=FALSE}
 hildaGlobal <- hildaGlobalTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000)
 hildaLocal <- hildaLocalTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000)
 ```
 
 ###  Assess Convergence of MCMC chains
-```{r eval=FALSE}
+```{r echo=FALSE}
+load(system.file("extdata/hildaGlobal.rdata", package="HiLDA"))
+load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+```
+
+```{r}
 hildaRhat(hildaGlobal)
 hildaRhat(hildaLocal)
 ```
 
 ## Get signatures from *pmsignature*
 ```{r}
+set.seed(123)
 K <- 3
 Param <- pmsignature::getPMSignature(G, K = K)
 ```
 
-## Visualize the mutation signatures 
-```{r eval=FALSE}
-pmBarplot(G, Param, refGroup=1:4)
+## Visualize the mutation signatures from pmsignature
+```{r}
+pmPlots <- pmBarplot(G, Param, refGroup=1:4, sigOrder=c(1,3,2))
+cowplot::plot_grid(pmPlots$sigPlot, pmPlots$propPlot, rel_widths = c(1,3))
 ```
 
-## Output the posterior distribution of the mean difference in mutational exposures
-```{r eval=FALSE}
-hildaDiffPlot(G, hildaLocal)
+## Visualize the mutation signatures from HiLDA
+```{r}
+hildaPlots <- hildaBarplot(G, hildaLocal, refGroup=1:4, sigOrder=c(1,3,2))
+cowplot::plot_grid(pmPlots$sigPlot, pmPlots$propPlot, rel_widths = c(1,3))
+```
+
+## Output the posterior distribution of the mean difference in mutational 
+## exposures
+```{r}
+hildaDiffPlots <- hildaDiffPlot(G, hildaLocal, sigOrder=c(1,3,2))
+cowplot::plot_grid(hildaDiffPlots$sigPlot, hildaDiffPlots$diffPlot, 
+                   rel_widths = c(1,3))
 ```
 
 

@@ -1,0 +1,26 @@
+Package: HiLDA
+Type: Package
+Title: Conducting statistical inference on comparing the mutational exposures of 
+    mutational signatures by using hierarchical latent Dirichlet allocation 
+Depends: R(>= 3.6), ggplot2
+Imports: R2jags, abind, cowplot, grid, forcats, stringr,
+         GenomicRanges, S4Vectors, XVector, Biostrings, GenomicFeatures,
+         BSgenome.Hsapiens.UCSC.hg19, BiocGenerics, tidyr, grDevices, stats,
+         TxDb.Hsapiens.UCSC.hg19.knownGene, utils
+Suggests: knitr, rmarkdown, testthat, BiocStyle
+Version: 0.1.0
+Date: 2019-05-08
+Authors@R: person("Zhi", "Yang", email = "zyang895@gmail.com", 
+    role = c("aut", "cre"))
+Description: A package built under the Bayesian framework of applying 
+    hierarchical latent Dirichlet allocation to statistically test whether the 
+    mutational exposures of mutational signatures (Shiraishi-model signatures) 
+    are different between two groups.
+License: GPL-3
+URL: https://github.com/USCbiostats/HiLDA,
+     https://doi.org/10.1101/577452
+BugReports: https://github.com/USCbiostats/HiLDA/issues
+SystemRequirements: JAGS 4.3.0
+biocViews: Software, SomaticMutation, Sequencing, StatisticalMethod, Bayesian
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr

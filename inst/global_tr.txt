@@ -1,81 +1,81 @@
 model {
-  for(k in 1:K){
-    beta[k] <- alpha[2,k]/sum(alpha[2,1:K]) - alpha[1,k]/sum(alpha[1,1:K])
-  }
+    for(k in 1:K){
+      beta[k] <- alpha[2,k]/sum(alpha[2,1:K]) - alpha[1,k]/sum(alpha[1,1:K])
+    }
 
-  for(i in 1:I1){
-    ## reference group
-    for(n in 1:N1[i]){
-      xG1[n,1,i] ~ dcat(pStates1[1, 1:numStates, sCat1[i,n]])
-      for(h in 1:numFlank){
-        xG1[n,h+1,i] ~ dcat(pStates2[h, 1:numFlank, sCat1[i,n]])
+    for(i in 1:I1){
+      ## reference group
+      for(n in 1:N1[i]){
+        xG1[n,1,i] ~ dcat(pStates1[1, 1:numStates, sCat1[i,n]])
+        for(h in 1:numFlank){
+          xG1[n,h+1,i] ~ dcat(pStates2[h, 1:numFlank, sCat1[i,n]])
+        }
+        xG1[n,numFlank+2,i] ~ dcat(pStates3[1, 1:2, sCat1[i,n]])
+
+        sCat1[i,n] ~ dcat(p1[i,1:K])
       }
-      xG1[n,numFlank+2,i] ~ dcat(pStates3[1, 1:2, sCat1[i,n]])
 
-      sCat1[i,n] ~ dcat(p1[i,1:K])
+      p1[i,1:K] ~ ddirch(alpha[1,1:K])
+
     }
 
-    p1[i,1:K] ~ ddirch(alpha[1,1:K])
+    for(i in 1:I2){
+      ## the other group
+      for(n in 1:N2[i]){
+        xG2[n,1,i] ~ dcat(pStates1[1, 1:numStates, sCat2[i,n]])
+        for(h in 1:numFlank){
+          xG2[n,h+1,i] ~ dcat(pStates2[h, 1:numFlank, sCat2[i,n]])
+        }
+        xG2[n,numFlank+2,i] ~ dcat(pStates3[1, 1:2, sCat2[i,n]])
 
-  }
-
-  for(i in 1:I2){
-    ## the other group
-    for(n in 1:N2[i]){
-      xG2[n,1,i] ~ dcat(pStates1[1, 1:numStates, sCat2[i,n]])
-      for(h in 1:numFlank){
-        xG2[n,h+1,i] ~ dcat(pStates2[h, 1:numFlank, sCat2[i,n]])
+        sCat2[i,n] ~ dcat(p2[i,1:K])
       }
-      xG2[n,numFlank+2,i] ~ dcat(pStates3[1, 1:2, sCat2[i,n]])
 
-      sCat2[i,n] ~ dcat(p2[i,1:K])
+      p2[i,1:K] ~ ddirch(alpha[2,1:K])
     }
 
-    p2[i,1:K] ~ ddirch(alpha[2,1:K])
-  }
+    ## priors
+    alpha[1,1:K] <- gamma[1]*mu[1,1:K]
+    alpha[2,1:K] <- gamma[2]*mu[M,1:K]
 
-  ## priors
-  alpha[1,1:K] <- gamma[1]*mu[1,1:K]
-  alpha[2,1:K] <- gamma[2]*mu[M,1:K]
+    mu[1,1:K] ~ ddirch(a[1:K])
+    mu[2,1:K] ~ ddirch(a[1:K])
 
-  mu[1,1:K] ~ ddirch(a[1:K])
-  mu[2,1:K] ~ ddirch(a[1:K])
-
-  for(k in 1:K) {
-    a[k] <- 1
-  }
-
-  gamma[1] ~ dgamma(0.001,0.001)
-  gamma[2] ~ dgamma(0.001,0.001)
-
-
-  ## signatures
-  for(k in 1:K) {
-    ## substituion type
-    pStates1[1,1:numStates,k] ~ ddirch(gammas1[1:numStates])
-
-    ## flanking bases
-    for(w in 1:numFlank){
-      pStates2[w,1:numFlank,k] ~ ddirch(gammas2[1:numFlank])
+    for(k in 1:K) {
+      a[k] <- 1
     }
 
-    pStates3[1,1:2,k] ~ ddirch(gammas3[1:2])
-  }
+    gamma[1] ~ dgamma(0.001,0.001)
+    gamma[2] ~ dgamma(0.001,0.001)
 
-  ## priors
-  for(q in 1:numStates){
-      gammas1[q] <- 1
-  }
 
-  for(h in 1:numFlank){
-      gammas2[h] <- 1
-  }
+    ## signatures
+    for(k in 1:K) {
+      ## substituion type
+      pStates1[1,1:numStates,k] ~ ddirch(gammas1[1:numStates])
 
-  gammas3[1:2] <- c(1,1)
+      ## flanking bases
+      for(w in 1:numFlank){
+        pStates2[w,1:numFlank,k] ~ ddirch(gammas2[1:numFlank])
+      }
 
-  ## model indicator
-  M ~ dcat(prob[])
-  prob[1] <- prob1
-  prob[2] <- 1-prob[1]
-  pM2 <- step(M - 1.5)
+      pStates3[1,1:2,k] ~ ddirch(gammas3[1:2])
+    }
+
+    ## priors
+    for(q in 1:numStates){
+        gammas1[q] <- 1
+    }
+
+    for(h in 1:numFlank){
+        gammas2[h] <- 1
+    }
+
+    gammas3[1:2] <- c(1,1)
+
+    ## model indicator
+    M ~ dcat(prob[])
+    prob[1] <- prob1
+    prob[2] <- 1-prob[1]
+    pM2 <- step(M - 1.5)
 }

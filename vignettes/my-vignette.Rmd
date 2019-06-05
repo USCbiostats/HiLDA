@@ -4,7 +4,7 @@ author:
 - name: Zhi Yang
   affiliation: Department of Preventive Medicine, 
     University of Southern California, Los Angeles, USA 
-  email: zhiyang@usc.edu or zyang895@gmail.com
+  email: zyang895@gmail.com
 date: "`r Sys.Date()`"
 vignette: |
   %\VignetteIndexEntry{An introduction to HiLDA}
@@ -93,16 +93,26 @@ inputFile <- system.file("extdata/esophageal.mp.txt.gz", package="HiLDA")
 G <- hildaReadMPFile(inputFile, numBases=5, trDir=TRUE)
 ```
 
+Loading a simulated dataset G with 10 mutational catalogs. 
 ```{r}
-inputFile <- system.file("extdata/sample.rdata", package = "HiLDA")
-load(inputFile)
+load(system.file("extdata/sample.rdata", package = "HiLDA"))
 ```
 
 ## Run tests from `HiLDA`
-### Generate the initial values and run the global test and the local test 
+### Perform the global test and the local test 
 ```{r}
 hildaGlobal <- hildaGlobalTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000)
 hildaLocal <- hildaLocalTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000)
+```
+
+### Perform the global test and the local test with initial values
+```{r}
+load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
+
+hildaGlobal <- hildaGlobalTest(inputG=G, numSig=3, useInits = Param,
+                               refGroup=1:4, nIter=1000)
+hildaLocal <- hildaLocalTest(inputG=G, numSig=3, useInits = Param,
+                             refGroup=1:4, nIter=1000)
 ```
 
 ###  Assess Convergence of MCMC chains
@@ -113,9 +123,7 @@ hildaRhat(hildaLocal)
 
 ## Get signatures from *pmsignature*
 ```{r}
-set.seed(123)
-K <- 3
-Param <- pmsignature::getPMSignature(G, K = K)
+load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
 ```
 
 ## Visualize the mutation signatures from pmsignature

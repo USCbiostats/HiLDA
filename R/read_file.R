@@ -296,27 +296,27 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
 getMutationFeatureVector <- function(context, ref_base, alt_base,
                                      strandInfo = NULL, numBases, type) {
 
-  trDir <- !is.null(strandInfo)
-  if (type == "independent") {
-    fdim <- c(6, rep(4, numBases - 1), rep(2, as.integer(trDir)))
-  } else if (type == "full") {
-    fdim <- c(6 * 4^(numBases - 1) * 2^(as.integer(trDir)))
-  } else {
-    stop('the type argument has to be "independent" or "full"')
-  }
+    trDir <- !is.null(strandInfo)
+    if (type == "independent") {
+      fdim <- c(6, rep(4, numBases - 1), rep(2, as.integer(trDir)))
+    } else if (type == "full") {
+      fdim <- c(6 * 4^(numBases - 1) * 2^(as.integer(trDir)))
+    } else {
+      stop('the type argument has to be "independent" or "full"')
+    }
 
-  if (numBases %% 2 != 1) {
-    stop("numBases should be odd numbers")
-  }
-  centerInd <- (numBases + 1) / 2
+    if (numBases %% 2 != 1) {
+      stop("numBases should be odd numbers")
+    }
+    centerInd <- (numBases + 1) / 2
 
-  if (type == "independent") {
+    if (type == "independent") {
 
-    mutFeatures <- matrix(0, length(ref_base), length(fdim))
+      mutFeatures <- matrix(0, length(ref_base), length(fdim))
 
-    centralBaseList <- data.frame(ref_base=rep(c("C", "T"), each=3),
-                                  alt_base=c("A", "G", "T", "A", "C", "G"),
-                                  stringsAsFactors = FALSE)
+      centralBaseList <- data.frame(ref_base=rep(c("C", "T"), each=3),
+                                    alt_base=c("A", "G", "T", "A", "C", "G"),
+                                    stringsAsFactors = FALSE)
 
     ## rewrite the part from pmsignature
 
@@ -349,7 +349,7 @@ getMutationFeatureVector <- function(context, ref_base, alt_base,
       mutFeatures[which(strandInfo == "-"), length(fdim)] <- 2
     }
 
-  } else {
+    } else {
 
     mutFeatures <- matrix(1, length(ref_base), length(fdim))
 

@@ -31,14 +31,15 @@ a plot of the input mutational signature
 }
 \description{
 Generate visualization of mutation signatures for the model with
-  substitution patterns and flanking bases represented by the indepenent
-  representation.
+             substitution patterns and flanking bases represented by the
+             indepenent representation.
 }
 \examples{
 
 load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
 
-visPMS(Param@signatureFeatureDistribution[1,,], numBases = 5, isScale = TRUE)
+sig <- slot(Param, "signatureFeatureDistribution")[1,,]
+visPMS(sig, numBases = 5, isScale = TRUE)
 
 
 }

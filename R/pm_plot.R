@@ -47,8 +47,8 @@ pmPlotSignature <- function(inputParam, sigOrder=NULL, colorList=NULL, ...) {
     cowplot::plot_grid(plotlist=plotList, ncol=1)
 }
 
-#' Plot both mutation signatures and their mutational exposures from pmsignature
-#' output
+#' Plot both mutation signatures and their mutational exposures from
+#' pmsignature output
 #'
 #' @param inputG a MutationFeatureData S4 class output by the pmsignature.
 #' @param inputParam a estimatedParameters S4 class output by the pmsignature.
@@ -148,8 +148,8 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
 
 
 
-#' Plot both mutation signatures and their mutational exposures from pmsignature
-#' output for more than two groups
+#' Plot both mutation signatures and their mutational exposures from
+#' pmsignature output for more than two groups
 #'
 #' @param inputG a MutationFeatureData S4 class output by the pmsignature.
 #' @param inputParam a estimatedParameters S4 class output by the pmsignature.

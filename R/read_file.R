@@ -284,7 +284,7 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
 #' @param ref_base the reference bases at the mutated position.
 #' @param alt_base the alternate bases at the mutated position.
 #' @param strandInfo transcribed strand information at the mutated position.
-#' (this is optional)
+#'   (this is optional)
 #' @param numBases the number of flanking bases around the mutated position.
 #' @param type the type of mutation feature vecotr (should be "independent" or
 #' "full").

@@ -45,9 +45,9 @@ hildaGlobalTest <- function(inputG, numSig, refGroup, useInits=NULL,
     # generate the known data for MCMC
     Num1 <- length(refGroup)
     Num2 <- length(inputG@sampleList) - Num1
-    rownames(countLong) <- 1:(Num1 + Num2)
+    rownames(countLong) <- seq_len(Num1 + Num2)
     mutationN <- as.vector(rowSums(countLong))
-    caseGroup <- setdiff(1:(Num1 + Num2), refGroup)
+    caseGroup <- setdiff(seq_len(Num1 + Num2), refGroup)
 
     nFlanking <- inputG@flankingBasesNum - 1
     nFeature <- length(inputG@possibleFeatures)
@@ -58,14 +58,14 @@ hildaGlobalTest <- function(inputG, numSig, refGroup, useInits=NULL,
                      .Dim=c(max(mutationN[caseGroup]), nFeature, Num2))
 
     for (i in refGroup) {
-        xG1[1:sum(countLong[i, ]), , which(refGroup == i)] <-
-            t(inputG@featureVectorList[, rep(1:ncol(inputG@featureVectorList),
+        xG1[seq_len(sum(countLong[i, ])), , which(refGroup == i)] <-
+    t(inputG@featureVectorList[, rep(seq_len(ncol(inputG@featureVectorList)),
                                              countLong[i, ])])
     }
 
     for (i in caseGroup) {
-        xG2[1:sum(countLong[i, ]), , which(caseGroup == i)] <-
-            t(inputG@featureVectorList[, rep(1:ncol(inputG@featureVectorList),
+        xG2[seq_len(sum(countLong[i, ])), , which(caseGroup == i)] <-
+    t(inputG@featureVectorList[, rep(seq_len(ncol(inputG@featureVectorList)),
                                              countLong[i, ])])
     }
 
@@ -85,28 +85,29 @@ hildaGlobalTest <- function(inputG, numSig, refGroup, useInits=NULL,
     if (is.null(useInits) == FALSE) {
         sig <- abind::abind(lapply(sigOrder, function(x)
             useInits@signatureFeatureDistribution[x, , ]), along=3)
-
-        inits_tr <- list(list(pStates1=array(sig[1, , sigOrder],
-                                             dim=c(1, 6, numSig)),
-                              pStates2=array(sig[2:nFeature, 1:4, sigOrder],
-                                             dim=c(nFlanking, 4, numSig)),
-                              pStates3=array(sig[nFeature, 1:2, sigOrder],
-                                             dim=c(1, 2, numSig))),
-                         list(pStates1=array(sig[1, , sigOrder],
-                                             dim=c(1, 6, numSig)),
-                              pStates2=array(sig[2:nFeature, 1:4, sigOrder],
-                                             dim=c(nFlanking, 4, numSig)),
-                              pStates3=array(sig[nFeature, 1:2, sigOrder],
-                                             dim=c(1, 2, numSig))))
-
-        inits <- list(list(pStates1=array(sig[1, , sigOrder],
-                                          dim=c(1, 6, numSig)),
-                           pStates2=array(sig[2:nFeature, 1:4, sigOrder],
-                                          dim=c(nFlanking, 4, numSig))),
-                      list(pStates1=array(sig[1, , sigOrder],
-                                          dim=c(1, 6, numSig)),
-                           pStates2=array(sig[2:nFeature, 1:4, sigOrder],
-                                          dim=c(nFlanking, 4, numSig))))
+        if(useInits@transcriptionDirection == TRUE){
+            inits_tr <- list(list(pStates1=array(sig[1, , sigOrder],
+                                                 dim=c(1, 6, numSig)),
+                                  pStates2=array(sig[2:nFeature, seq_len(4),
+                                      sigOrder], dim=c(nFlanking, 4, numSig)),
+                                  pStates3=array(sig[nFeature, seq_len(2),
+                                           sigOrder], dim=c(1, 2, numSig))),
+                             list(pStates1=array(sig[1, , sigOrder],
+                                           dim=c(1, 6, numSig)),
+                                  pStates2=array(sig[2:nFeature, seq_len(4),
+                                      sigOrder], dim=c(nFlanking, 4, numSig)),
+                                  pStates3=array(sig[nFeature, seq_len(2),
+                                      sigOrder], dim=c(1, 2, numSig))))
+        } else {
+            inits <- list(list(pStates1=array(sig[1, , sigOrder],
+                                              dim=c(1, 6, numSig)),
+                               pStates2=array(sig[2:nFeature, seq_len(4),
+                                   sigOrder], dim=c(nFlanking, 4, numSig))),
+                          list(pStates1=array(sig[1, , sigOrder],
+                                              dim=c(1, 6, numSig)),
+                               pStates2=array(sig[2:nFeature, seq_len(4),
+                                   sigOrder], dim=c(nFlanking, 4, numSig))))
+        }
     }
 
     if (is.null(useInits) == FALSE) {

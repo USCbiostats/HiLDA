@@ -10,14 +10,15 @@ An S4 class representing the mutation data
 \section{Slots}{
 
 \describe{
-\item{\code{featureVectorList}}{a list of feature vectors actually observed in the
-input mutation data}
+\item{\code{featureVectorList}}{a list of feature vectors actually observed
+in the input mutation data}
 
-\item{\code{sampleList}}{a list of sample names observed in the input mutation data}
+\item{\code{sampleList}}{a list of sample names observed in the input mutation
+data}
 
-\item{\code{countData}}{a matrix representing the number of mutations and samples.
-The (1st, 2nd, 3rd) columns are for (mutation pattern index, sample index,
-frequencies).}
+\item{\code{countData}}{a matrix representing the number of mutations and
+samples. The (1st, 2nd, 3rd) columns are for (mutation pattern
+index, sample index, frequencies).}
 
 \item{\code{mutationPosition}}{a data frame containing position and mutations}
 }}

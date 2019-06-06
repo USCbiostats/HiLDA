@@ -2,8 +2,8 @@
 % Please edit documentation in R/hilda_plot.R
 \name{hildaDiffPlot}
 \alias{hildaDiffPlot}
-\title{Read the raw mutation data with the mutation feature vector format, estimate
-and plot both mutation signatures and their fractions}
+\title{Read the raw mutation data with the mutation feature vector format,
+  estimate and plot both mutation signatures and their fractions}
 \usage{
 hildaDiffPlot(inputG, hildaResult, sigOrder = NULL, charSize = 3)
 }
@@ -20,8 +20,8 @@ hildaDiffPlot(inputG, hildaResult, sigOrder = NULL, charSize = 3)
 a list of the signature plot and the mean difference plot.
 }
 \description{
-Read the raw mutation data with the mutation feature vector format, estimate
-and plot both mutation signatures and their fractions
+Read the raw mutation data with the mutation feature vector format,
+  estimate and plot both mutation signatures and their fractions
 }
 \examples{
 

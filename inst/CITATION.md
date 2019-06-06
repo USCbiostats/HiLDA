@@ -4,7 +4,7 @@ year <- sub("-.*", "", meta$Date)
 note <- sprintf("R package version %s", meta$Version)
 
 citEntry(entry="Article",
-         title = "HiLDA: a statistical approach to investigate differences in 
+title = "HiLDA: a statistical approach to investigate differences in 
          mutational signatures",
          author = personList(as.person("Zhi", "Yang"),
                              as.person("Priyatama", "Pandey"),

@@ -2,8 +2,8 @@
 % Please edit documentation in R/pm_plot.R
 \name{pmBarplot}
 \alias{pmBarplot}
-\title{Plot both mutation signatures and their mutational exposures from pmsignature
-output}
+\title{Plot both mutation signatures and their mutational exposures from
+pmsignature output}
 \usage{
 pmBarplot(inputG, inputParam, sigOrder = NULL, refGroup = NULL,
   sortSampleNum = TRUE, refName = "Control", altName = "Case",
@@ -30,8 +30,8 @@ pmBarplot(inputG, inputParam, sigOrder = NULL, refGroup = NULL,
 a list of a signature plot and a barplot of mutational exposures
 }
 \description{
-Plot both mutation signatures and their mutational exposures from pmsignature
-output
+Plot both mutation signatures and their mutational exposures from
+pmsignature output
 }
 \examples{
 

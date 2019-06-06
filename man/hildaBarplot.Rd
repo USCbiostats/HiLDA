@@ -2,8 +2,8 @@
 % Please edit documentation in R/hilda_plot.R
 \name{hildaBarplot}
 \alias{hildaBarplot}
-\title{Read the raw mutation data with the mutation feature vector format, estimate
-and plot both mutation signatures and their fractions}
+\title{Read the raw mutation data with the mutation feature vector format,
+  estimate and plot both mutation signatures and their fractions}
 \usage{
 hildaBarplot(inputG, hildaResult, sigOrder = NULL, refGroup,
   sortSampleNum = TRUE, refName = "Control", altName = "Case",
@@ -31,8 +31,8 @@ hildaBarplot(inputG, hildaResult, sigOrder = NULL, refGroup,
 a list of a signature plot and a barplot of mutational exposures
 }
 \description{
-Read the raw mutation data with the mutation feature vector format, estimate
-and plot both mutation signatures and their fractions
+Read the raw mutation data with the mutation feature vector format,
+  estimate and plot both mutation signatures and their fractions
 }
 \examples{
 

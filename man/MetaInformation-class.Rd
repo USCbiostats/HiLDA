@@ -4,13 +4,13 @@
 \name{MetaInformation-class}
 \alias{MetaInformation-class}
 \title{An S4 class to represent a mutation meta information common to many data
-types}
+  types}
 \description{
 @slot type type of data format (independent, full, custom)
  @slot flankingBasesNum the number of flanking bases to consider (only
-   applicable for independent and full types)
+       applicable for independent and full types)
  @slot transcriptionDirection the flag representing whether transcription
-   direction is considered or not
+       direction is considered or not
  @slot possibleFeatures a vector representing the numbers of possible values
- for each mutation feature
+       for each mutation feature
 }

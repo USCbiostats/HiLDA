@@ -1,7 +1,7 @@
 #' @title visualize probabisitic mutaiton signature for the independent model
 #' @description Generate visualization of mutation signatures for the model with
-#'   substitution patterns and flanking bases represented by the indepenent
-#'   representation.
+#'              substitution patterns and flanking bases represented by the
+#'              indepenent representation.
 #'
 #' @param vF a matrix for mutation signature
 #' @param numBases the number of flanking bases
@@ -21,7 +21,8 @@
 #'
 #' load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
 #'
-#' visPMS(Param@signatureFeatureDistribution[1,,], numBases = 5, isScale = TRUE)
+#' sig <- slot(Param, "signatureFeatureDistribution")[1,,]
+#' visPMS(sig, numBases = 5, isScale = TRUE)
 #'
 #'
 #' @export
@@ -35,13 +36,13 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
 
     centerBase <- (1 + numBases) / 2
 
-    v1 <- vF[1,1:6]
+    v1 <- vF[1,seq_len(6)]
     V2 <- vF[2:(numBases),seq_len(4)]
     A <- matrix(0, numBases, 4)
     B <- matrix(0, 4, 4)
 
     if (trDir == TRUE) {
-      v3 <- vF[(numBases + 1),1:2]
+      v3 <- vF[(numBases + 1),seq_len(2)]
     }
 
     for (l in seq_len(numBases)) {
@@ -51,10 +52,10 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
         A[l, ] <- V2[l - 1, ]
       }
     }
-    A[centerBase,2] <- sum(v1[1:3])
+    A[centerBase,2] <- sum(v1[seq_len(3)])
     A[centerBase,4] <- sum(v1[4:6])
 
-    B[2, c(1, 3, 4)] <- v1[1:3] / sum(v1[1:3])
+    B[2, c(1, 3, 4)] <- v1[seq_len(3)] / sum(v1[seq_len(3)])
     B[4, c(1, 2, 3)] <- v1[4:6] / sum(v1[4:6])
 
     renyi <- function(p, tAlpha=alpha) {
@@ -86,13 +87,13 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
     # flanking bases
     tempStartX <- 0
     for (i in seq_len(numBases)) {
-      x_start <- c(x_start, tempStartX + c(0, cumsum(A[i,1:3])))
-      x_end <- c(x_end, tempStartX + cumsum(A[i,1:4]))
+      x_start <- c(x_start, tempStartX + c(0, cumsum(A[i,seq_len(3)])))
+      x_end <- c(x_end, tempStartX + cumsum(A[i,seq_len(4)]))
       y_start <- c(y_start, rep(0, 4))
       y_end <- c(y_end, rep(fheight[i], 4))
       rectType <- c(rectType, c("A", "C", "G", "T"))
-      for (j in 1:4) {
-        tempPos <- c(0, cumsum(A[i,1:4]))
+      for (j in seq_len(4)) {
+        tempPos <- c(0, cumsum(A[i,seq_len(4)]))
         if (A[i,j] > charLimit && fheight[i] > charLimit) {
           text_x <- c(text_x, tempStartX + 0.5 * (tempPos[j] + tempPos[j + 1]))
           text_y <- c(text_y, 0.5 * (0 + fheight[i]))
@@ -107,12 +108,12 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
     tempStartX <- (centerBase - 1) * 1.25
     x_start <- c(x_start, rep(tempStartX, 4))
     x_end <- c(x_end, rep(tempStartX + A[centerBase, 2], 4))
-    y_start <- c(y_start, 2 + c(0, cumsum(B[2,1:3])))
-    y_end <- c(y_end, 2 + cumsum(B[2,1:4]))
+    y_start <- c(y_start, 2 + c(0, cumsum(B[2,seq_len(3)])))
+    y_end <- c(y_end, 2 + cumsum(B[2,seq_len(4)]))
     rectType <- c(rectType, c("A", "C", "G", "T"))
 
-    tempPos <- c(0, cumsum(B[2,1:4]))
-    for (j in 1:4) {
+    tempPos <- c(0, cumsum(B[2,seq_len(4)]))
+    for (j in seq_len(4)) {
       if (A[centerBase, 2] > charLimit && B[2,j] > charLimit) {
         text_x <- c(text_x, tempStartX + 0.5 * A[centerBase, 2])
         text_y <- c(text_y, 2 + 0.5 * (tempPos[j] + tempPos[j + 1]))
@@ -125,12 +126,12 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
     tempStartX <- tempStartX + A[centerBase, 2]
     x_start <- c(x_start, rep(tempStartX, 4))
     x_end <- c(x_end, rep(tempStartX + A[centerBase, 4], 4))
-    y_start <- c(y_start, 2 + c(0, cumsum(B[4,1:3])))
-    y_end <- c(y_end, 2 + cumsum(B[4,1:4]))
+    y_start <- c(y_start, 2 + c(0, cumsum(B[4,seq_len(3)])))
+    y_end <- c(y_end, 2 + cumsum(B[4,seq_len(4)]))
     rectType <- c(rectType, c("A", "C", "G", "T"))
 
-    tempPos <- c(0, cumsum(B[4,1:4]))
-    for (j in 1:4) {
+    tempPos <- c(0, cumsum(B[4,seq_len(4)]))
+    for (j in seq_len(4)) {
       if (A[centerBase, 4] > charLimit && B[4,j] > charLimit) {
         text_x <- c(text_x, tempStartX + 0.5 * A[centerBase, 4])
         text_y <- c(text_y, 2 + 0.5 * (tempPos[j] + tempPos[j + 1]))

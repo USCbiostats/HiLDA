@@ -2,8 +2,8 @@
 % Please edit documentation in R/pm_plot.R
 \name{pmMultiBarplot}
 \alias{pmMultiBarplot}
-\title{Plot both mutation signatures and their mutational exposures from pmsignature
-output for more than two groups}
+\title{Plot both mutation signatures and their mutational exposures from
+pmsignature output for more than two groups}
 \usage{
 pmMultiBarplot(inputG, inputParam, sigOrder = NULL, groupIndices,
   sortSampleNum = TRUE, charSize = 3)
@@ -26,8 +26,8 @@ the number of mutations (default: TRUE).}
 a list of the signature plot and the mean difference plot.
 }
 \description{
-Plot both mutation signatures and their mutational exposures from pmsignature
-output for more than two groups
+Plot both mutation signatures and their mutational exposures from
+pmsignature output for more than two groups
 }
 \examples{
 

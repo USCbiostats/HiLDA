@@ -15,7 +15,8 @@ output:
     toc_float: true
   BiocStyle::pdf_document: default
 abstract: | 
-  Instructions on using _HiLDA_ on testing the burdens of mutational signatures. 
+  Instructions on using _HiLDA_ on testing the burdens of mutational 
+  signatures. 
 
 ---
 
@@ -97,6 +98,9 @@ Loading a simulated dataset G with 10 mutational catalogs.
 ```{r}
 load(system.file("extdata/sample.rdata", package = "HiLDA"))
 ```
+
+If you'd use the USC data in the manuscript, please download the data from the
+OSF home page https://osf.io/a8dzx/
 
 ## Run tests from `HiLDA`
 ### Perform the global test and the local test 

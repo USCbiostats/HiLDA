@@ -47,7 +47,7 @@ hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
             tempSig[1, ] <- hildaResult$BUGSoutput$mean$pStates1[, , i]
             tempSig[2:(length(feature) - 1), seq_len(feature[2])] <-
                 hildaResult$BUGSoutput$mean$pStates2[, , i]
-            tempSig[length(feature), 1:2] <-
+            tempSig[length(feature), seq_len(2)] <-
                 hildaResult$BUGSoutput$mean$pStates3[, , i]
         } else {
             tempSig[1, ] <- hildaResult$BUGSoutput$mean$pStates1[, , i]
@@ -69,8 +69,8 @@ hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
 
 
 
-#' Read the raw mutation data with the mutation feature vector format, estimate
-#' and plot both mutation signatures and their fractions
+#' Read the raw mutation data with the mutation feature vector format,
+#'   estimate and plot both mutation signatures and their fractions
 #'
 #' @param inputG a MutationFeatureData S4 class output by the pmsignature.
 #' @param hildaResult a rjags class output by HiLD.
@@ -104,7 +104,7 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
     numSig <- dim(hildaResult$BUGSoutput$mean$pStates1)[3]
 
     if (is.null(sigOrder)) {
-        sigOrder <- 1:numSig
+        sigOrder <- seq_len(numSig)
     }
 
     membership <- data.frame(sample=forcats::fct_reorder(inputG@sampleList,
@@ -149,8 +149,8 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
 
 
 
-#' Read the raw mutation data with the mutation feature vector format, estimate
-#' and plot both mutation signatures and their fractions
+#' Read the raw mutation data with the mutation feature vector format,
+#'   estimate and plot both mutation signatures and their fractions
 #'
 #' @param inputG a MutationFeatureData S4 class output by the pmsignature.
 #' @param hildaResult a rjags class output by HiLDA.
@@ -176,7 +176,7 @@ hildaDiffPlot <- function(inputG, hildaResult, sigOrder=NULL, charSize=3) {
     numSig <- dim(hildaResult$BUGSoutput$mean$pStates1)[3]
 
     if (is.null(sigOrder)) {
-        sigOrder <- 1:numSig
+        sigOrder <- seq_len(numSig)
     }
 
     membership <- data.frame(signature=paste("signature", seq_len(numSig)),

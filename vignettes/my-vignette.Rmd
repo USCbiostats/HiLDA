@@ -37,9 +37,10 @@ on the independent model proposed by Shiraishi's et al.
 cancer mutation signatures, bioRxiv, doi: 
 [http://dx.doi.org/10.1101/019901](http://dx.doi.org/10.1101/019901).
 
-- **Zhi Yang**, Priyatama Pandey, Darryl Shibata, David V. Conti, Paul Marjoram, 
-Kimberly D. Siegmund. HiLDA: a statistical approach to investigate differences 
-in mutational signatures, bioRxiv, doi: https://doi.org/10.1101/577452 
+- **Zhi Yang**, Priyatama Pandey, Darryl Shibata, David V. Conti, 
+Paul Marjoram, Kimberly D. Siegmund. HiLDA: a statistical approach to 
+investigate differences in mutational signatures, bioRxiv, 
+doi: https://doi.org/10.1101/577452 
 
 
 # Input data
@@ -54,11 +55,11 @@ data, *mutation features* are elements used for categorizing mutations such as:
 
 ## Mutation Position Format
 
-sample1 chr1  100	A	C	
-sample1	chr1	200	A	T	
-sample1	chr2	100	G	T	
-sample2	chr1	300	T	C	
-sample3	chr3	400	T	C	
+    sample1 chr1  100	A	C	
+    sample1	chr1	200	A	T	
+    sample1	chr2	100	G	T	
+    sample2	chr1	300	T	C	
+    sample3	chr3	400	T	C	
   
 * The 1st column shows the name of samples 
 * The 2nd column shows the name of chromosome 

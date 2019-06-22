@@ -7,8 +7,9 @@
 #' @return a plot object containing all mutational signatures
 #'
 #' @examples
-#'
-#' load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+#' 
+#' inputFile <- system.file("extdata/hildaLocal.rdata", package="HiLDA")
+#' hildaLocal <- readRDS(inputFile)
 #' hildaPlotSignature(hildaLocal)
 #'
 #' @importFrom cowplot plot_grid
@@ -16,17 +17,30 @@
 
 hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
                                ...) {
+    if(class(hildaResult) != "rjags") {
+        stop("Not an output object from running the HiLDA tests.")
+    }
+    
     numSig <- dim(hildaResult$BUGSoutput$mean$pStates1)[3]
-
+    
     if (is.null(sigOrder)) {
         sigOrder <- seq_len(numSig)
     }
+    
+    if(length(sigOrder) != numSig) {
+        stop("The order of signatures has more or less samples.")
+    }
 
+    
     if (is.null(colorList)) {
         colorList <- hcl(h=seq(15, 375, length=numSig + 1),
                          l=65, c=100)[seq_len(numSig)]
     }
 
+    if(length(colorList) != numSig) {
+        stop("The length of the color list has more or less samples.")
+    }
+    
     plotList <- vector("list", numSig)
 
     feature <- c(length(hildaResult$BUGSoutput$mean$pStates1[,,1]),
@@ -86,12 +100,13 @@ hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
 #' @examples
 #'
 #' load(system.file("extdata/sample.rdata", package="HiLDA"))
-#' load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+#' inputFile <- system.file("extdata/hildaLocal.rdata", package="HiLDA")
+#' hildaLocal <- readRDS(inputFile)
 #'
 #' hildaBarplot(G, hildaLocal, refGroup=1:4)
 #'
 #' @importFrom cowplot plot_grid
-#' @importFrom tidyr gather
+#' @importFrom tidyr gather_
 #' @importFrom grid unit.c
 #' @importFrom forcats fct_relevel fct_reorder
 #' @importFrom stats aggregate
@@ -103,8 +118,24 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
                          charSize=3) {
     numSig <- dim(hildaResult$BUGSoutput$mean$pStates1)[3]
 
+    if(class(inputG) != "MutationFeatureData") {
+        stop("Not an output object from reading in the data using HiLDA.")
+    }
+    
+    if(class(hildaResult) != "rjags") {
+        stop("Not an output object from running the HiLDA tests.")
+    }
+    
     if (is.null(sigOrder)) {
         sigOrder <- seq_len(numSig)
+    }
+
+    if(length(sigOrder) != numSig) {
+        stop("The order of signatures has more or less samples.")
+    }
+    
+    if (length(refGroup) >= length(inputG@sampleList)) {
+        stop(paste("There are more reference samples than the total samples"))
     }
 
     membership <- data.frame(sample=forcats::fct_reorder(inputG@sampleList,
@@ -135,14 +166,19 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
                                        unit(0, "npc"), unit(0.045, "npc"),
                                        unit(0, "npc")))
 
-    propPlot <- ggplot(tidyr::gather(membership, sig, frac, -sample, -grp),
-                       aes(x=sample, y=frac, fill=sig)) +
+    propPlot <- ggplot(tidyr::gather_(membership, key_col = "sig", 
+                                      value_col = "frac", 
+                            gather_cols = c(paste0("Sig", seq_len(numSig)))),
+                       aes(x=.data$sample, y=.data$frac, fill=.data$sig)) +
         geom_bar(stat="identity", width=0.8) + ylab("Proportions") +
         facet_grid(~grp, scales="free_x", space="free_x") +
         theme_bw() +
-        theme(legend.position="none", axis.text.x=element_blank(),
-              axis.ticks.x=element_blank(), axis.title.x=element_blank(),
-        panel.border=element_blank(), panel.grid.major.x=element_blank())
+        theme(legend.position="none", 
+              axis.text.x=element_blank(),
+              axis.ticks.x=element_blank(), 
+              axis.title.x=element_blank(),
+              panel.border=element_blank(), 
+              panel.grid.major.x=element_blank())
 
     return(list(sigPlot=sigPlot, propPlot=propPlot))
 }
@@ -161,7 +197,8 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
 #' @examples
 #'
 #' load(system.file("extdata/sample.rdata", package="HiLDA"))
-#' load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+#' inputFile <- system.file("extdata/hildaLocal.rdata", package="HiLDA")
+#' hildaLocal <- readRDS(inputFile)
 #'
 #' hildaDiffPlot(G, hildaLocal)
 #'
@@ -179,6 +216,14 @@ hildaDiffPlot <- function(inputG, hildaResult, sigOrder=NULL, charSize=3) {
         sigOrder <- seq_len(numSig)
     }
 
+    if(class(inputG) != "MutationFeatureData") {
+        stop("Not an output object from reading in the data using HiLDA.")
+    }
+    
+    if(class(hildaResult) != "rjags") {
+        stop("Not an output object from running the HiLDA tests.")
+    }
+    
     membership <- data.frame(signature=paste("signature", seq_len(numSig)),
                              hildaLocalResult(hildaResult)[sigOrder,
                                                            c(3, 5, 7)])
@@ -191,8 +236,9 @@ hildaDiffPlot <- function(inputG, hildaResult, sigOrder=NULL, charSize=3) {
                                        unit(0, "npc")))
 
     diffPlot <- ggplot(membership,
-                       aes(x=rev(signature), y=med, color=signature)) +
-        geom_pointrange(aes(ymin=lower, ymax=upper)) +
+                       aes(x=rev(.data$signature), y=.data$med, 
+                           color=.data$signature)) +
+        geom_pointrange(aes(ymin=.data$lower, ymax=.data$upper)) +
         coord_flip() +
         geom_hline(yintercept=0, linetype="dashed", color="black") +
         ylab("Difference in mean exposures (%) by HiLDA") +

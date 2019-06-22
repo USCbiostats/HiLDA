@@ -1,0 +1,9 @@
+Changes in version 0.99.1 (2019-06-04)
++ Submitted to Bioconductor
+
+Changes in version 0.99.2 (2019-06-05)
++ Remove pmsignature dependency
+
+Changes in version 0.99.3 (2019-06-21)
++ Fix the issues commented by the Bioconductor reviewer
+

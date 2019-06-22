@@ -11,7 +11,6 @@ test_that("correctly load the test data", {
 test_that("running the global test and the local test", {
 
   load(inputFile <- system.file("extdata/sample.rdata", package = "HiLDA"))
-  load(inputFile <- system.file("extdata/sampleParam.rdata", package = "HiLDA"))
-
+  Param <- pmgetSignature(G, K = 3)
   expect_equal(class(pmBarplot(G, Param, refGroup=1:4)), "list")
 })

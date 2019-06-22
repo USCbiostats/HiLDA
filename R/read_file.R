@@ -47,6 +47,7 @@
 #' as the initial values for the global test and the local test.
 #'
 #' @importFrom utils read.table
+#' @importFrom methods new
 #' @examples
 #' inputFile <- system.file("extdata/esophageal.mp.txt.gz", package="HiLDA")
 #' G <- hildaReadMPFile(inputFile, numBases=5, trDir=TRUE)
@@ -105,12 +106,12 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
     if (length(removeInd) > 0) {
       warning(paste("The central bases are inconsistent in", length(removeInd),
                     "mutations. We have removed them."))
-      context <- context[-removeInd]
-      ref_base <- ref_base[-removeInd]
-      alt_base <- alt_base[-removeInd]
-      sampleName_str <- sampleName_str[-removeInd]
-      chrInfo <- chrInfo[-removeInd]
-      posInfo <- posInfo[-removeInd]
+      
+      for(obj in list(context, ref_base, alt_base, 
+                      sampleName_str, chrInfo, posInfo)) {
+        obj <- obj[-removeInd]
+      }
+      
     }
 
     # check the characters on alternative base
@@ -120,12 +121,11 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
       warning(paste("The characters other than (A, C, G, T) are included in
                     alternate bases of", length(removeInd),
                     "mutations. We have removed them."))
-      context <- context[-removeInd]
-      ref_base <- ref_base[-removeInd]
-      alt_base <- alt_base[-removeInd]
-      sampleName_str <- sampleName_str[-removeInd]
-      chrInfo <- chrInfo[-removeInd]
-      posInfo <- posInfo[-removeInd]
+      
+      for(obj in list(context, ref_base, alt_base, 
+                      sampleName_str, chrInfo, posInfo)) {
+        obj <- obj[-removeInd]
+      }
     }
 
     # check the characters on flanking bases
@@ -133,12 +133,9 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
     removeInd <- which(alphabetFreq[,"A"] + alphabetFreq[,"C"] +
                          alphabetFreq[,"G"] + alphabetFreq[,"T"] != numBases)
     if (length(removeInd) > 0) {
-      context <- context[-removeInd]
-      ref_base <- ref_base[-removeInd]
-      alt_base <- alt_base[-removeInd]
-      sampleName_str <- sampleName_str[-removeInd]
-      chrInfo <- chrInfo[-removeInd]
-      posInfo <- posInfo[-removeInd]
+      lapply(list(context, ref_base, alt_base, 
+                  sampleName_str, chrInfo, posInfo), 
+             function(obj) obj <- obj[-removeInd])
       warning(paste("The characters other than (A, C, G, T) are included in
                     flanking bases of", length(removeInd),
                     "mutations. We have removed them."))
@@ -150,12 +147,11 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
     if (length(removeInd) > 0) {
       warning(paste("The reference base and alternative bases are equal for",
                     length(removeInd), "mutations. We have removed them."))
-      context <- context[-removeInd]
-      ref_base <- ref_base[-removeInd]
-      alt_base <- alt_base[-removeInd]
-      sampleName_str <- sampleName_str[-removeInd]
-      chrInfo <- chrInfo[-removeInd]
-      posInfo <- posInfo[-removeInd]
+      
+      for(obj in list(context, ref_base, alt_base, 
+                      sampleName_str, chrInfo, posInfo)) {
+        obj <- obj[-removeInd]
+      }
     }
 
 
@@ -196,8 +192,8 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
       strandInfo[setdiff(txdb_minus_gr_ind, revCompInd)] <- "-"
       strandInfo[intersect(txdb_minus_gr_ind, revCompInd)] <- "+"
 
-      warning(paste("Out of", length(context), "mutations, we could obtain
-                    transcription direction information for",
+      warning(paste("Out of", length(context), "mutations, we could obtain",
+                    "transcription direction information for",
                     length(txdb_plus_gr_ind) + length(txdb_minus_gr_ind),
                     "mutation. Other mutations are removed."))
 
@@ -253,7 +249,7 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
       strandInfo_for_class <- strandInfo
     }
 
-    return(new(Class = "MutationFeatureData",
+    return(methods::new(Class = "MutationFeatureData",
                type = type,
                flankingBasesNum = as.integer(numBases),
                transcriptionDirection = trDir,
@@ -276,6 +272,9 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
 
 
 
+
+
+
 #' Get mutation feature vector from context sequence data and reference and
 #' alternate allele information
 #'
@@ -292,7 +291,6 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
 #'
 #'
 #'
-#' @export
 getMutationFeatureVector <- function(context, ref_base, alt_base,
                                      strandInfo = NULL, numBases, type) {
 
@@ -358,56 +356,46 @@ getMutationFeatureVector <- function(context, ref_base, alt_base,
 
       baseInd <- numBases + 1 - i
 
-      mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                        == "C"), 1] <-
+      mutFeaturesList <- c("C", "G", "T")
+      
+      for(i in mutFeaturesList) {
         mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                          == "C"), 1] + tempDigits * 1
-
-      mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                        == "G"), 1] <-
-        mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                          == "G"), 1] + tempDigits * 2
-
-      mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                        == "T"), 1] <-
-        mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                          == "T"), 1] + tempDigits * 3
+                          == i), 1] <-
+          mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
+                            == i), 1] + tempDigits * which(mutFeaturesList == i)
+      }
+      
 
       tempDigits <- tempDigits * 4
       baseInd <- i;
-      mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                        == "C"), 1] <-
-        mutFeatures[which(XVector::subseq(context, tart=baseInd, end=baseInd)
-                          == "C"), 1] + tempDigits * 1
-
-      mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                        == "G"), 1] <-
+      
+      for(i in mutFeaturesList) {
         mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                          == "G"), 1] + tempDigits * 2
-
-      mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                        == "T"), 1] <-
-        mutFeatures[which(XVector::subseq(context, start=baseInd, end=baseInd)
-                          == "T"), 1] + tempDigits * 3
+                          == i), 1] <-
+          mutFeatures[which(XVector::subseq(context, tart=baseInd, end=baseInd)
+                            == i), 1] + tempDigits * which(mutFeaturesList == i)
+      }
 
       tempDigits <- tempDigits * 4
     }
 
-    mutFeatures[which(ref_base == "C" & alt_base == "G"), 1] <-
-      mutFeatures[which(ref_base == "C" & alt_base == "G"), 1] +
-      tempDigits * 1
-    mutFeatures[which(ref_base == "C" & alt_base == "T"), 1] <-
-      mutFeatures[which(ref_base == "C" & alt_base == "T"), 1] +
-      tempDigits * 2
-    mutFeatures[which(ref_base == "T" & alt_base == "A"), 1] <-
-      mutFeatures[which(ref_base == "T" & alt_base == "A"), 1] +
-      tempDigits * 3
-    mutFeatures[which(ref_base == "T" & alt_base == "C"), 1] <-
-      mutFeatures[which(ref_base == "T" & alt_base == "C"), 1] +
-      tempDigits * 4
-    mutFeatures[which(ref_base == "T" & alt_base == "G"), 1] <-
-      mutFeatures[which(ref_base == "T" & alt_base == "G"), 1] +
-      tempDigits * 5
+    
+    mutFeaturesMat <- cbind(c("C", "C", "T", "T", "T"),
+                            c("G", "T", "A", "C", "G"))
+    
+    
+    for(i in seq_len(nrow(mutFeaturesMat))) {
+      
+      mutFea1 <- mutFeaturesMat[i, 1]
+      mutFea2 <- mutFeaturesMat[i, 2]
+      
+      
+      mutFeatures[which(ref_base == mutFea1 & alt_base == mutFea2), 1] <-
+        mutFeatures[which(ref_base == mutFea1 & alt_base == mutFea2), 1] +
+        tempDigits * i
+      
+    }
+
 
     if (trDir ==TRUE) {
       tempDigits <- tempDigits * 6

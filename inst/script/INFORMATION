@@ -1,0 +1,53 @@
+You can find three data objects saved in inst/extdata
+
+- esophageal.mp.txt.gz
+- hildaLocal.rdata
+- sample.rdata
+
+
+## esophageal.mp.txt.gz
+
+### Introduction
+This data was used in the following paper, which contains 146 samples obtained 
+from the esopheageal cancer patients: Shiraishi et al. A simple model-based 
+approach to inferring and visualizing cancer mutation signatures 
+http://dx.plos.org/10.1371/journal.pgen.1005657
+
+### The data source
+You can download the dataset from the GitHub repo here 
+https://github.com/friend1ws/pmsignature_paper/tree/master/analysis/AlexandrovEtAl/result/MPFormat
+
+### Instructions
+Please use inst/script/use_esophageal.R to read in this data. 
+
+## hildaLocal.rdata
+
+### Introduction
+By loading this file, you will access an rjags object that stores the local test 
+on the sample G. 
+
+### The data source
+This data was generated from running the local test on the sample G. 
+
+### Instructions
+Please use inst/script/use_hildaLocal.R to read in this data. 
+
+
+## sample.rdata
+
+### Introduction
+By loading this file, you will be able to access an object, sample G, of ten 
+mutational catalogs. 
+
+### The data source
+The sample data was was simulated with two groups of mutational catalogs using 
+three mutational (7, 13, 23) signatures from Shiraishi et al's paper mentioned 
+above. The first group contains 4 samples with 150 mutations per sample, of 
+which the proportions were drawn from a Dirichlet distribution of Dir(1, 2, 3). 
+In the second group, 6 samples with 100 mutations per sample were simulated, of 
+which the proportions were drawn from a Dirichlet distribution of Dir(3, 2, 1). 
+
+### Instructions
+Please use inst/script/use_sampledata.R to read in this data. 
+
+

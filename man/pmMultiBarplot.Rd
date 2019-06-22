@@ -32,7 +32,7 @@ pmsignature output for more than two groups
 \examples{
 
 load(system.file("extdata/sample.rdata", package="HiLDA"))
-load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
+Param <- pmgetSignature(G, K = 3)
 
 pmPlots <- pmMultiBarplot(G, Param, groupIndices=c(1, rep(2,3), rep(3,6)))
 cowplot::plot_grid(pmPlots$sigPlot, pmPlots$propPlot, rel_widths = c(1,3))

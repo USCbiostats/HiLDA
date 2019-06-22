@@ -8,8 +8,8 @@
 #'
 #' @examples
 #'
-#' load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
-#'
+#' load(system.file("extdata/sample.rdata", package="HiLDA"))
+#' Param <- pmgetSignature(G, K = 3)
 #' pmPlotSignature(Param)
 #'
 #' @importFrom cowplot plot_grid
@@ -24,10 +24,15 @@ pmPlotSignature <- function(inputParam, sigOrder=NULL, colorList=NULL, ...) {
         sigOrder <- seq_len(numSig)
     }
 
+    if (class(inputParam) != "EstimatedParameters") {
+        stop("The inputParam object is not an EstimatedParameters object")
+    }
+    
     if (is.null(colorList)) {
         colorList <- hcl(h=seq(15, 375, length=numSig + 1),
                          l=65, c=100)[seq_len(numSig)]
     }
+
 
     plotList <- vector("list", numSig)
 
@@ -64,13 +69,13 @@ pmPlotSignature <- function(inputParam, sigOrder=NULL, colorList=NULL, ...) {
 #' @examples
 #'
 #' load(system.file("extdata/sample.rdata", package="HiLDA"))
-#' load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
+#' Param <- pmgetSignature(G, K = 3)
 #'
 #' pmPlots <- pmBarplot(G, Param, refGroup=1:4)
 #' cowplot::plot_grid(pmPlots$sigPlot, pmPlots$propPlot, rel_widths = c(1,3))
 #'
 #'
-#' @importFrom tidyr gather
+#' @importFrom tidyr gather_
 #' @importFrom grid unit.c
 #' @importFrom forcats fct_relevel fct_reorder
 #' @export
@@ -83,7 +88,15 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
     if (is.null(sigOrder)) {
         sigOrder <- seq_len(numSig)
     }
-
+    
+    if (class(inputParam) != "EstimatedParameters") {
+        stop("The inputParam object is not an EstimatedParameters object")
+    }
+    
+    if(class(inputG) != "MutationFeatureData") {
+        stop("Not an output object from reading in the data using HiLDA.")
+    }
+    
     membership <- data.frame(sample=forcats::fct_reorder(inputParam@sampleList,
                                     seq_len(length(inputParam@sampleList))),
                              inputParam@sampleSignatureDistribution[, sigOrder])
@@ -101,8 +114,11 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
         sigPlot <- pmPlotSignature(inputParam, sigOrder, charSize=charSize) +
             theme(plot.margin=unit(c(0.045, 0, 0.045, 0), "npc"))
 
-        propPlot <- ggplot(tidyr::gather(membership, sig, frac, -sample),
-                           aes(x=sample, y=frac, fill=sig)) +
+        propPlot <- ggplot(tidyr::gather_(membership, key_col = "sig", 
+                                          value_col = "frac", 
+                                          gather_cols = 
+                            c(paste0("Sig",seq_len(inputParam@signatureNum)))),
+                           aes(x=.data$sample, y=.data$frac, fill=.data$sig)) +
             geom_bar(stat="identity", width=0.8) + ylab("Proportions") +
             theme_bw() +
             theme(legend.position="none",
@@ -131,8 +147,11 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
                                            unit(0, "npc"),
                                            unit(0.045, "npc"), unit(0, "npc")))
 
-        propPlot <- ggplot(tidyr::gather(membership, sig, frac, -sample, -grp),
-                           aes(x=sample, y=frac, fill=sig)) +
+        propPlot <- ggplot(tidyr::gather_(membership, key_col = "sig", 
+                                          value_col = "frac", 
+                                          gather_cols = 
+                            c(paste0("Sig",seq_len(numSig)))),
+                           aes(x=.data$sample, y=.data$frac, fill=.data$sig)) +
             geom_bar(stat="identity", width=0.8) + ylab("Proportions") +
             facet_grid(~grp, scales="free_x", space="free_x") +
             theme_bw() + theme(legend.position="none",
@@ -163,13 +182,13 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
 #' @examples
 #'
 #' load(system.file("extdata/sample.rdata", package="HiLDA"))
-#' load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
+#' Param <- pmgetSignature(G, K = 3)
 #'
 #' pmPlots <- pmMultiBarplot(G, Param, groupIndices=c(1, rep(2,3), rep(3,6)))
 #' cowplot::plot_grid(pmPlots$sigPlot, pmPlots$propPlot, rel_widths = c(1,3))
 #'
 #' @importFrom cowplot plot_grid
-#' @importFrom tidyr gather
+#' @importFrom tidyr gather_
 #' @importFrom grid unit.c
 #' @importFrom forcats fct_relevel fct_reorder
 #' @export
@@ -182,6 +201,14 @@ pmMultiBarplot <- function(inputG, inputParam, sigOrder=NULL, groupIndices,
         sigOrder <- seq_len(numSig)
     }
 
+    if(class(inputG) != "MutationFeatureData") {
+        stop("Not an output object from reading in the data using HiLDA.")
+    }
+    
+    if (class(inputParam) != "EstimatedParameters") {
+        stop("The inputParam object is not an EstimatedParameters object")
+    }
+    
     if (length(unique(groupIndices)) == 1) {
         stop(paste("More than one group is required!"))
     }
@@ -212,8 +239,10 @@ pmMultiBarplot <- function(inputG, inputParam, sigOrder=NULL, groupIndices,
                                        unit(0, "npc"), unit(0.045, "npc"),
                                        unit(0, "npc")))
 
-    propPlot <- ggplot(tidyr::gather(membership, sig, frac, -sample, -grp),
-                       aes(x=sample, y=frac, fill=sig)) +
+    propPlot <- ggplot(tidyr::gather_(membership, key_col = "sig", 
+                                      value_col = "frac", 
+                        c(paste0("Sig",seq_len(numSig)))),
+                       aes(x=.data$sample, y=.data$frac, fill=.data$sig)) +
         geom_bar(stat="identity", width=0.8) + ylab("Proportions") +
         facet_grid(~grp, scales="free_x", space="free_x") +
         theme_bw() +

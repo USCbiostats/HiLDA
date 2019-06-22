@@ -36,7 +36,8 @@ Generate visualization of mutation signatures for the model with
 }
 \examples{
 
-load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
+load(system.file("extdata/sample.rdata", package="HiLDA"))
+Param <- pmgetSignature(G, K = 3)
 
 sig <- slot(Param, "signatureFeatureDistribution")[1,,]
 visPMS(sig, numBases = 5, isScale = TRUE)

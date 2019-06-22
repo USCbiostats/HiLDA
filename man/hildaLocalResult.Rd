@@ -20,7 +20,8 @@ exposures
 }
 \examples{
 
-load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+inputFile <- system.file("extdata/hildaLocal.rdata", package="HiLDA")
+hildaLocal <- readRDS(inputFile)
 hildaLocalResult(hildaLocal)
 
 }

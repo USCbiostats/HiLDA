@@ -20,7 +20,9 @@ Compute the Bayes factor
 }
 \examples{
 
-load(system.file("extdata/hildaGlobal.rdata", package="HiLDA"))
+load(system.file("extdata/sample.rdata", package="HiLDA"))
+hildaGlobal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
+localTest=TRUE)
 hildaGlobalResult(hildaGlobal)
 
 }

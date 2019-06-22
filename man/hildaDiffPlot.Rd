@@ -26,7 +26,8 @@ Read the raw mutation data with the mutation feature vector format,
 \examples{
 
 load(system.file("extdata/sample.rdata", package="HiLDA"))
-load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+inputFile <- system.file("extdata/hildaLocal.rdata", package="HiLDA")
+hildaLocal <- readRDS(inputFile)
 
 hildaDiffPlot(G, hildaLocal)
 

@@ -19,8 +19,9 @@
 #'
 #' @examples
 #'
-#' load(system.file("extdata/sampleParam.rdata", package="HiLDA"))
-#'
+#' load(system.file("extdata/sample.rdata", package="HiLDA"))
+#' Param <- pmgetSignature(G, K = 3)
+#' 
 #' sig <- slot(Param, "signatureFeatureDistribution")[1,,]
 #' visPMS(sig, numBases = 5, isScale = TRUE)
 #'
@@ -29,6 +30,14 @@
 visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
                        isScale=FALSE, alpha=2, charLimit=0.25) {
 
+    if(ncol(vF) != 6) {
+      stop("The size of the matrix is wrong.")
+    }
+  
+    if((numBases %% 2) != 1) {
+      stop("The number of bases should include the central base.")
+    }
+  
     if (is.na(baseCol)) {
       gg_color_hue6 <- hcl(h=seq(15, 375, length=7), l=65, c=100)[seq_len(6)]
       baseCol <- c(gg_color_hue6[c(3, 5, 2, 1, 6)])
@@ -84,6 +93,7 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
     rectType <- c()
     num2base <- c("A", "C", "G", "T")
 
+    
     # flanking bases
     tempStartX <- 0
     for (i in seq_len(numBases)) {
@@ -140,6 +150,7 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
       }
     }
 
+    
     if (trDir == TRUE) {
 
       # draw direction bias
@@ -185,12 +196,12 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
                             label=text_lab, text_col=text_col)
 
     ggplot() +
-      geom_rect(data=rect_data, aes(xmin=x_start, xmax=x_end,
-                                      ymin=y_start, ymax=y_end,
-                                      fill=rectType)) +
-      geom_polygon(data=arrow_poly, aes(x=x, y=y, fill=v))  +
-      geom_text(data=text_data, aes(label=label, x=x, y=y,
-                                      colour=text_col), size=charSize) +
+      geom_rect(data=rect_data, aes(xmin=.data$x_start, xmax=.data$x_end,
+                                      ymin=.data$y_start, ymax=.data$y_end,
+                                      fill=.data$rectType)) +
+      geom_polygon(data=arrow_poly, aes(x=.data$x, y=.data$y, fill=.data$v))  +
+      geom_text(data=text_data, aes(label=.data$label, x=.data$x, y=.data$y,
+                                      colour=.data$text_col), size=charSize) +
       scale_colour_manual(values=c("#FFFFFF")) +
       scale_fill_manual(
         values=c("A"=baseCol[1], "C"=baseCol[2], "G"=baseCol[3],

@@ -7,14 +7,20 @@
 #' @return a number for the Rhat statistic.
 #'
 #' @examples
-#'
-#' load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+#' 
+#' inputFile <- system.file("extdata/hildaLocal.rdata", package="HiLDA")
+#' hildaLocal <- readRDS(inputFile)
 #' hildaRhat(hildaLocal)
 #'
 #' @export
 #
 
-hildaRhat <- function(jagsOutput) max(jagsOutput$BUGSoutput$summary[, "Rhat"])
+hildaRhat <- function(jagsOutput) {
+    if(class(jagsOutput) != "rjags") {
+        stop("Not an output object from running the HiLDA tests.")
+    }
+    return(max(jagsOutput$BUGSoutput$summary[, "Rhat"]))
+}
 
 
 #' Extract the posterior distributions of the mean differences in muational
@@ -24,8 +30,9 @@ hildaRhat <- function(jagsOutput) max(jagsOutput$BUGSoutput$summary[, "Rhat"])
 #' the R2jags package.
 #'
 #' @examples
-#'
-#' load(system.file("extdata/hildaLocal.rdata", package="HiLDA"))
+#' 
+#' inputFile <- system.file("extdata/hildaLocal.rdata", package="HiLDA")
+#' hildaLocal <- readRDS(inputFile)
 #' hildaLocalResult(hildaLocal)
 #'
 #' @importFrom stringr str_detect
@@ -35,6 +42,9 @@ hildaRhat <- function(jagsOutput) max(jagsOutput$BUGSoutput$summary[, "Rhat"])
 #
 
 hildaLocalResult <- function(jagsOutput) {
+    if(class(jagsOutput) != "rjags") {
+        stop("Not an output object from running the HiLDA tests.")
+    }
     rownames <- rownames(jagsOutput$BUGSoutput$summary)
     beta.index <- stringr::str_detect(rownames, "beta")
     return(jagsOutput$BUGSoutput$summary[beta.index, ])
@@ -48,14 +58,24 @@ hildaLocalResult <- function(jagsOutput) {
 #' @return a number for the Bayes factor
 #'
 #' @examples
-#'
-#' load(system.file("extdata/hildaGlobal.rdata", package="HiLDA"))
+#' 
+#' load(system.file("extdata/sample.rdata", package="HiLDA"))
+#' hildaGlobal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
+#' localTest=TRUE)
 #' hildaGlobalResult(hildaGlobal)
 #'
 #' @export
 #
 
 hildaGlobalResult <- function(jagsOutput, pM1=0.5) {
+    if(class(jagsOutput) != "rjags") {
+        stop("Not an output object from running the HiLDA tests.")
+    }
+    
+    if(pM1 <= 0 | pM1 >= 1) {
+        stop("Please input a fraction between 0 and 1.")
+    }
+    
     freq <- table(jagsOutput$BUGSoutput$sims.list$pM2)
     if (length(freq) == 1) {
         stop(paste("It got stuck in the model", as.numeric(names(freq)) + 1))

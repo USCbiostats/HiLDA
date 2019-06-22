@@ -1,0 +1,20 @@
+## File specifications
+
+You can find four .txt files in inst/ folder as followed:
+- global.txt
+- global_tr.txt
+- local.txt
+- local_tr.txt
+
+## Why we need those files?
+
+Those files contain the JAGS model specification for running the global test and 
+the local test in HiLDA with and without specifying the transcription strand 
+direction. By using the R package R2jags, one of the model will be supplied to 
+the function to run MCMC. 
+
+## How we create those files?
+
+The JAGS model is entered using a text editor and later used by R. The syntax
+can be found here using the JAGS Version 4.3.0 user manual 
+http://people.stat.sc.edu/hansont/stat740/jags_user_manual.pdf

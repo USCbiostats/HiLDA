@@ -15,3 +15,6 @@ Changes in version 0.99.5 (2019-06-22)
 
 Changes in version 0.99.6 (2019-06-22)
 + Remove git tracking .o and .dll files
+
+Changes in version 0.99.7 (2019-06-22)
++ Remove git tracking .o and .dll files

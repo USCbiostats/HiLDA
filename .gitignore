@@ -6,13 +6,3 @@
 *.Rproj
 doc
 Meta
-src-i386/checkBoundary.o
-src-i386/convertFromToVector.o
-src-i386/EMalgorithm.o
-src-i386/RcppExports.o
-src-x64/checkBoundary.o
-src-x64/convertFromToVector.o
-src-x64/EMalgorithm.o
-src-x64/RcppExports.o
-src-i386/HiLDA.dll
-src-x64/HiLDA.dll

@@ -13,11 +13,12 @@
 #' hildaPlotSignature(hildaLocal)
 #'
 #' @importFrom cowplot plot_grid
+#' @importFrom methods is
 #' @export
 
 hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
                                ...) {
-    if(class(hildaResult) != "rjags") {
+    if(is(hildaResult) != "rjags") {
         stop("Not an output object from running the HiLDA tests.")
     }
     
@@ -110,6 +111,7 @@ hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
 #' @importFrom grid unit.c
 #' @importFrom forcats fct_relevel fct_reorder
 #' @importFrom stats aggregate
+#' @importFrom methods is
 #' @export
 
 
@@ -118,11 +120,11 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
                          charSize=3) {
     numSig <- dim(hildaResult$BUGSoutput$mean$pStates1)[3]
 
-    if(class(inputG) != "MutationFeatureData") {
+    if(is(inputG)[1] != "MutationFeatureData") {
         stop("Not an output object from reading in the data using HiLDA.")
     }
     
-    if(class(hildaResult) != "rjags") {
+    if(is(hildaResult) != "rjags") {
         stop("Not an output object from running the HiLDA tests.")
     }
     
@@ -205,6 +207,7 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
 #' @importFrom cowplot plot_grid
 #' @importFrom grid unit.c
 #' @import ggplot2
+#' @importFrom methods is
 #'
 #' @export
 
@@ -216,11 +219,11 @@ hildaDiffPlot <- function(inputG, hildaResult, sigOrder=NULL, charSize=3) {
         sigOrder <- seq_len(numSig)
     }
 
-    if(class(inputG) != "MutationFeatureData") {
+    if(is(inputG)[1] != "MutationFeatureData") {
         stop("Not an output object from reading in the data using HiLDA.")
     }
     
-    if(class(hildaResult) != "rjags") {
+    if(is(hildaResult) != "rjags") {
         stop("Not an output object from running the HiLDA tests.")
     }
     

@@ -24,12 +24,12 @@
 #' @useDynLib HiLDA
 #' @importFrom Rcpp sourceCpp
 #' @importFrom stats rgamma
-#' @importFrom methods slot
+#' @importFrom methods slot is
 #' @export
 pmgetSignature <- function(mutationFeatureData, K, numInit = 10, tol = 1e-4, 
                            maxIter = 10000) {
   
-    if (class(mutationFeatureData) != "MutationFeatureData") {
+    if (is(mutationFeatureData)[1] != "MutationFeatureData") {
       stop("This inputfile is not an MutationFeatureData object.")
     }
   

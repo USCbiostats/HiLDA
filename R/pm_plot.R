@@ -14,6 +14,7 @@
 #'
 #' @importFrom cowplot plot_grid
 #' @importFrom grDevices hcl
+#' @importFrom methods is
 #' @export
 
 pmPlotSignature <- function(inputParam, sigOrder=NULL, colorList=NULL, ...) {
@@ -24,7 +25,7 @@ pmPlotSignature <- function(inputParam, sigOrder=NULL, colorList=NULL, ...) {
         sigOrder <- seq_len(numSig)
     }
 
-    if (class(inputParam) != "EstimatedParameters") {
+    if (is(inputParam)[1] != "EstimatedParameters") {
         stop("The inputParam object is not an EstimatedParameters object")
     }
     
@@ -78,6 +79,7 @@ pmPlotSignature <- function(inputParam, sigOrder=NULL, colorList=NULL, ...) {
 #' @importFrom tidyr gather_
 #' @importFrom grid unit.c
 #' @importFrom forcats fct_relevel fct_reorder
+#' @importFrom methods is
 #' @export
 
 pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
@@ -89,11 +91,11 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
         sigOrder <- seq_len(numSig)
     }
     
-    if (class(inputParam) != "EstimatedParameters") {
+    if (is(inputParam)[1] != "EstimatedParameters") {
         stop("The inputParam object is not an EstimatedParameters object")
     }
     
-    if(class(inputG) != "MutationFeatureData") {
+    if(is(inputG)[1] != "MutationFeatureData") {
         stop("Not an output object from reading in the data using HiLDA.")
     }
     
@@ -191,6 +193,7 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
 #' @importFrom tidyr gather_
 #' @importFrom grid unit.c
 #' @importFrom forcats fct_relevel fct_reorder
+#' @importFrom methods is
 #' @export
 
 pmMultiBarplot <- function(inputG, inputParam, sigOrder=NULL, groupIndices,
@@ -201,11 +204,11 @@ pmMultiBarplot <- function(inputG, inputParam, sigOrder=NULL, groupIndices,
         sigOrder <- seq_len(numSig)
     }
 
-    if(class(inputG) != "MutationFeatureData") {
+    if(is(inputG)[1] != "MutationFeatureData") {
         stop("Not an output object from reading in the data using HiLDA.")
     }
     
-    if (class(inputParam) != "EstimatedParameters") {
+    if (is(inputParam)[1] != "EstimatedParameters") {
         stop("The inputParam object is not an EstimatedParameters object")
     }
     

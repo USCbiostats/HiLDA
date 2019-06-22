@@ -28,6 +28,7 @@
 #' @importFrom R2jags jags
 #' @importFrom abind abind
 #' @importFrom stats reshape
+#' @importFrom methods is
 #' @export
 
 hildaTest <- function(inputG, numSig, refGroup, useInits=NULL, sigOrder=NULL, 
@@ -42,6 +43,10 @@ hildaTest <- function(inputG, numSig, refGroup, useInits=NULL, sigOrder=NULL,
     
     if (length(refGroup) >= length(inputG@sampleList)) {
         stop(paste("There are more reference samples than the total samples"))
+    }
+    
+    if(is(inputG)[1] != "MutationFeatureData") {
+        stop("Not an output object from reading in the data using HiLDA.")
     }
     
     # reshape the counts of input data

@@ -7,3 +7,5 @@ Changes in version 0.99.2 (2019-06-05)
 Changes in version 0.99.3 (2019-06-21)
 + Fix the issues commented by the Bioconductor reviewer
 
+Changes in version 0.99.4 (2019-06-22)
++ Remove git tracking .o and .dll files

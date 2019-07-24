@@ -5,7 +5,7 @@
 \title{Read the raw mutation data of Mutation Position Format.}
 \usage{
 hildaReadMPFile(infile, numBases = 3, trDir = FALSE,
-  type = "independent", bs_genome = NULL, txdb_transcript = NULL)
+  bs_genome = NULL, txdb_transcript = NULL)
 }
 \arguments{
 \item{infile}{the path for the input file for the mutation data of Mutation
@@ -19,8 +19,6 @@ considered or not.
 The gene annotation information is given by UCSC knownGene
 (TxDb.Hsapiens.UCSC.hg19.knownGene object) When trDir is TRUE, the mutations
 located in intergenic region are excluded from the analysis.}
-
-\item{type}{this argument can take either "independent", "full", or "custom".}
 
 \item{bs_genome}{this argument specifies the reference genome (e.g., B
 Sgenome.Mmusculus.UCSC.mm10 can be used for the mouse genome).
@@ -59,7 +57,6 @@ sample3 chr3 400 T C
 
 Also, this function usually can accept compressed files (e.g., by gzip, bzip2
 and so on) when using recent version of R.
-Currently, only UCSC hg19 (BSgenome.Hsapiens.UCSC.hg19) is supported.
 }
 \examples{
 inputFile <- system.file("extdata/esophageal.mp.txt.gz", package="HiLDA")

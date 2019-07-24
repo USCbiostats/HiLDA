@@ -13,7 +13,7 @@ pmPlotSignature(inputParam, sigOrder = NULL, colorList = NULL, ...)
 
 \item{colorList}{a list of color to highlight the signatures (default: NULL).}
 
-\item{...}{Other arguments passed on to methods.}
+\item{...}{additional arguments passed on to visPMS.}
 }
 \value{
 a plot object containing all mutational signatures

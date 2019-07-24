@@ -9,7 +9,7 @@ pmgetSignature(mutationFeatureData, K, numInit = 10, tol = 1e-04,
 }
 \arguments{
 \item{mutationFeatureData}{the mutation data (MutationFeatureData class 
-(S4 class)) by the \code{readMPFile} or \code{readMFVFile} functions.}
+(S4 class)) by the \code{hildaReadMPFile}.}
 
 \item{K}{the number of mutation signatures}
 
@@ -32,7 +32,7 @@ The output is an instance of EstimatedParameters S4 class, which
 Obtain the parameters for mutation signatures and memberships
 }
 \examples{
-## After obtaining mutationFeatureData (see e.g., readMPFile function) as G,
+## After obtaining G (see e.g., hildaReadMPFile function)
 load(system.file("extdata/sample.rdata", package="HiLDA"))
 Param <- pmgetSignature(G, K = 3)
 

@@ -42,7 +42,7 @@ mutation signatures between two groups
 load(system.file("extdata/sample.rdata", package="HiLDA"))
 
 ## with initial values
-hildaGlobal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
+hildaLocal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
 localTest=TRUE)
 hildaGlobal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
 localTest=FALSE)

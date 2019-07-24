@@ -22,7 +22,6 @@
 #'
 #' Also, this function usually can accept compressed files (e.g., by gzip, bzip2
 #' and so on) when using recent version of R.
-#' Currently, only UCSC hg19 (BSgenome.Hsapiens.UCSC.hg19) is supported.
 #'
 #' @param infile the path for the input file for the mutation data of Mutation
 #' Position Format.
@@ -33,7 +32,6 @@
 #' The gene annotation information is given by UCSC knownGene
 #' (TxDb.Hsapiens.UCSC.hg19.knownGene object) When trDir is TRUE, the mutations
 #' located in intergenic region are excluded from the analysis.
-#' @param type this argument can take either "independent", "full", or "custom".
 #' @param bs_genome this argument specifies the reference genome (e.g., B
 #' Sgenome.Mmusculus.UCSC.mm10 can be used for the mouse genome).
 #' See https://bioconductor.org/packages/release/bioc/html/BSgenome.html for the
@@ -55,8 +53,7 @@
 #'
 #' @export
 hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
-                            type = "independent", bs_genome = NULL,
-                            txdb_transcript = NULL) {
+                            bs_genome = NULL, txdb_transcript = NULL) {
 
     if (is.null(bs_genome) == TRUE) {
       bs_genome <- BSgenome.Hsapiens.UCSC.hg19::BSgenome.Hsapiens.UCSC.hg19
@@ -67,14 +64,8 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
         TxDb.Hsapiens.UCSC.hg19.knownGene::TxDb.Hsapiens.UCSC.hg19.knownGene
     }
 
-    if (type == "independent") {
-      fdim <- c(6, rep(4, numBases - 1), rep(2, as.integer(trDir)))
-    } else if (type == "full") {
-      fdim <- c(6 * 4^(numBases - 1) * 2^(as.integer(trDir)))
-    } else {
-      stop('for reading mutation position format, the type argument has to be
-           "independent" or "full"')
-    }
+    fdim <- c(6, rep(4, numBases - 1), rep(2, as.integer(trDir)))
+    type <- "independent"
 
     if (numBases %% 2 != 1) {
       stop("numBases should be odd numbers")
@@ -104,12 +95,13 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
     removeInd <- which(XVector::subseq(context, start = centerInd,
                                        end = centerInd) != ref_base)
     if (length(removeInd) > 0) {
-      warning(paste("The central bases are inconsistent in", length(removeInd),
-                    "mutations. We have removed them."))
+      warning("The central bases are inconsistent in ", length(removeInd), 
+              " mutations. We have removed them.")
       
-      for(obj in list(context, ref_base, alt_base, 
-                      sampleName_str, chrInfo, posInfo)) {
-        obj <- obj[-removeInd]
+      
+      for(varname in c("context", "ref_base", "alt_base", 
+                      "sampleName_str", "chrInfo", "posInfo")) {
+        assign(varname, get(varname)[-removeInd])
       }
       
     }
@@ -118,13 +110,13 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
     alphabetFreq <- Biostrings::alphabetFrequency(alt_base)
     removeInd <- which(rowSums(alphabetFreq[,seq_len(4)]) != 1)
     if (length(removeInd) > 0) {
-      warning(paste("The characters other than (A, C, G, T) are included in
-                    alternate bases of", length(removeInd),
-                    "mutations. We have removed them."))
+      warning("The characters other than (A, C, G, T) are included in
+               alternate bases of ", length(removeInd),
+               " mutations. We have removed them.")
       
-      for(obj in list(context, ref_base, alt_base, 
-                      sampleName_str, chrInfo, posInfo)) {
-        obj <- obj[-removeInd]
+      for(varname in c("context", "ref_base", "alt_base", 
+                       "sampleName_str", "chrInfo", "posInfo")) {
+        assign(varname, get(varname)[-removeInd])
       }
     }
 
@@ -136,21 +128,21 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
       lapply(list(context, ref_base, alt_base, 
                   sampleName_str, chrInfo, posInfo), 
              function(obj) obj <- obj[-removeInd])
-      warning(paste("The characters other than (A, C, G, T) are included in
-                    flanking bases of", length(removeInd),
-                    "mutations. We have removed them."))
+      warning("The characters other than (A, C, G, T) are included in
+                flanking bases of ", length(removeInd),
+               " mutations. We have removed them.")
     }
 
     # check the characters on alternative base
     alphabetFreq <- Biostrings::alphabetFrequency(alt_base)
     removeInd <- which(ref_base == alt_base)
     if (length(removeInd) > 0) {
-      warning(paste("The reference base and alternative bases are equal for",
-                    length(removeInd), "mutations. We have removed them."))
+      warning("The reference base and alternative bases are equal for ",
+              length(removeInd), " mutations. We have removed them.")
       
-      for(obj in list(context, ref_base, alt_base, 
-                      sampleName_str, chrInfo, posInfo)) {
-        obj <- obj[-removeInd]
+      for(varname in c("context", "ref_base", "alt_base", 
+                       "sampleName_str", "chrInfo", "posInfo")) {
+        assign(varname, get(varname)[-removeInd])
       }
     }
 
@@ -192,11 +184,11 @@ hildaReadMPFile <- function(infile, numBases = 3, trDir = FALSE,
       strandInfo[setdiff(txdb_minus_gr_ind, revCompInd)] <- "-"
       strandInfo[intersect(txdb_minus_gr_ind, revCompInd)] <- "+"
 
-      warning(paste("Out of", length(context), "mutations, we could obtain",
-                    "transcription direction information for",
-                    length(txdb_plus_gr_ind) + length(txdb_minus_gr_ind),
-                    "mutation. Other mutations are removed."))
-
+      warning("Out of ", length(context), " mutations, we could obtain",
+              "transcription direction information for ",
+              length(txdb_plus_gr_ind) + length(txdb_minus_gr_ind),
+              " mutation. Other mutations are removed.")
+      
       context <- context[strandInfo != "*"]
       ref_base <- ref_base[strandInfo != "*"]
       alt_base <- alt_base[strandInfo != "*"]

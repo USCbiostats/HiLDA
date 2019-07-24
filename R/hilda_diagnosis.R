@@ -84,7 +84,7 @@ hildaGlobalResult <- function(jagsOutput, pM1=0.5) {
     
     freq <- table(jagsOutput$BUGSoutput$sims.list$pM2)
     if (length(freq) == 1) {
-        stop(paste("It got stuck in the model", as.numeric(names(freq)) + 1))
+        stop("It got stuck in the model ", as.numeric(names(freq)) + 1)
     }
     return(as.vector(freq)[2]/as.vector(freq)[1] * (pM1)/(1 - pM1))
 }

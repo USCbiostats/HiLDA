@@ -1,7 +1,7 @@
 #' Obtain the parameters for mutation signatures and memberships
 #' 
 #' @param mutationFeatureData the mutation data (MutationFeatureData class 
-#'        (S4 class)) by the \code{readMPFile} or \code{readMFVFile} functions. 
+#'        (S4 class)) by the \code{hildaReadMPFile}. 
 #' @param K the number of mutation signatures
 #' @param numInit the number of performing calculations with different initial 
 #'        values
@@ -16,7 +16,7 @@
 #'         signatures and memberships
 #' 
 #' @examples 
-#' ## After obtaining mutationFeatureData (see e.g., readMPFile function) as G,
+#' ## After obtaining G (see e.g., hildaReadMPFile function)
 #' load(system.file("extdata/sample.rdata", package="HiLDA"))
 #' Param <- pmgetSignature(G, K = 3)
 #' 

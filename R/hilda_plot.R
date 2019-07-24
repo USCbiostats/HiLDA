@@ -3,7 +3,7 @@
 #' @param hildaResult a rjags class output by HiLDA
 #' @param sigOrder the order of signatures if needed (default: NULL)
 #' @param colorList a vector of color for mutational exposures barplots
-#' @param ... Other arguments passed on to methods
+#' @param ... additional arguments passed on to visPMS
 #' @return a plot object containing all mutational signatures
 #'
 #' @examples
@@ -58,14 +58,14 @@ hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
 
     for (i in sigOrder) {
         tempSig <- matrix(0, nrow=numBases, ncol=6)
+        tempSig[1, ] <- hildaResult$BUGSoutput$mean$pStates1[, , i]
+        
         if (trDir == TRUE) {
-            tempSig[1, ] <- hildaResult$BUGSoutput$mean$pStates1[, , i]
             tempSig[2:(length(feature) - 1), seq_len(feature[2])] <-
                 hildaResult$BUGSoutput$mean$pStates2[, , i]
             tempSig[length(feature), seq_len(2)] <-
                 hildaResult$BUGSoutput$mean$pStates3[, , i]
         } else {
-            tempSig[1, ] <- hildaResult$BUGSoutput$mean$pStates1[, , i]
             tempSig[2:length(feature), seq_len(feature[2])] <-
                 hildaResult$BUGSoutput$mean$pStates2[, , i]
         }
@@ -137,7 +137,7 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
     }
     
     if (length(refGroup) >= length(inputG@sampleList)) {
-        stop(paste("There are more reference samples than the total samples"))
+        stop("There are more reference samples than the total samples")
     }
 
     membership <- data.frame(sample=forcats::fct_reorder(inputG@sampleList,
@@ -151,7 +151,7 @@ hildaBarplot <- function(inputG, hildaResult, sigOrder=NULL, refGroup,
                               FUN=sum)
 
     if (length(refGroup) > length(inputG@sampleList)) {
-        stop(paste("The length of groups is greater than the sample size!"))
+        stop("The length of groups is greater than the sample size!")
     }
 
     membership$grp <- altName

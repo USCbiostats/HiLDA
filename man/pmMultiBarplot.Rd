@@ -15,7 +15,7 @@ pmMultiBarplot(inputG, inputParam, sigOrder = NULL, groupIndices,
 
 \item{sigOrder}{the order of signatures if needed (default: NULL).}
 
-\item{groupIndices}{a vector of group indicators (default: NULL).}
+\item{groupIndices}{a vector of group indicators.}
 
 \item{sortSampleNum}{an indictor variable on whether samples are sorted by
 the number of mutations (default: TRUE).}

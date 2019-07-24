@@ -20,7 +20,7 @@
 #' load(system.file("extdata/sample.rdata", package="HiLDA"))
 #'
 #'## with initial values
-#' hildaGlobal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
+#' hildaLocal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
 #' localTest=TRUE)
 #' hildaGlobal <- hildaTest(inputG=G, numSig=3, refGroup=1:4, nIter=1000,
 #' localTest=FALSE)
@@ -38,11 +38,11 @@ hildaTest <- function(inputG, numSig, refGroup, useInits=NULL, sigOrder=NULL,
     }
 
     if (numSig < 1) {
-        stop(paste("The number of signatures needs to be greater than 2."))
+        stop("The number of signatures needs to be greater than 2.")
     }
     
     if (length(refGroup) >= length(inputG@sampleList)) {
-        stop(paste("There are more reference samples than the total samples"))
+        stop("There are more reference samples than the total samples")
     }
     
     if(is(inputG)[1] != "MutationFeatureData") {

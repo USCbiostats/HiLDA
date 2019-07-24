@@ -3,7 +3,7 @@
 #' @param inputParam a estimatedParameters S4 class output by the pmsignature.
 #' @param sigOrder the order of signatures if needed (default: NULL).
 #' @param colorList a list of color to highlight the signatures (default: NULL).
-#' @param ... Other arguments passed on to methods.
+#' @param ... additional arguments passed on to visPMS.
 #' @return a plot object containing all mutational signatures
 #'
 #' @examples
@@ -131,7 +131,7 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
                   panel.grid.major.x=element_blank())
     } else {
         if (length(refGroup) > length(inputParam@sampleList)) {
-            stop(paste("The length of groups is greater than the sample size!"))
+            stop("The length of groups is greater than the sample size!")
         }
 
         membership$grp <- altName
@@ -175,7 +175,7 @@ pmBarplot <- function(inputG, inputParam, sigOrder=NULL, refGroup=NULL,
 #' @param inputG a MutationFeatureData S4 class output by the pmsignature.
 #' @param inputParam a estimatedParameters S4 class output by the pmsignature.
 #' @param sigOrder the order of signatures if needed (default: NULL).
-#' @param groupIndices a vector of group indicators (default: NULL).
+#' @param groupIndices a vector of group indicators.
 #' @param sortSampleNum an indictor variable on whether samples are sorted by
 #'        the number of mutations (default: TRUE).
 #' @param charSize the size of the character on the signature plot (default: 3)
@@ -213,7 +213,7 @@ pmMultiBarplot <- function(inputG, inputParam, sigOrder=NULL, groupIndices,
     }
     
     if (length(unique(groupIndices)) == 1) {
-        stop(paste("More than one group is required!"))
+        stop("More than one group is required!")
     }
 
     membership <- data.frame(sample=forcats::fct_reorder(inputParam@sampleList,
@@ -225,7 +225,7 @@ pmMultiBarplot <- function(inputG, inputParam, sigOrder=NULL, groupIndices,
                               FUN=sum)
 
     if (length(groupIndices) > length(inputParam@sampleList)) {
-        stop(paste("The length of groups is greater than the sample size!"))
+        stop("The length of groups is greater than the sample size!")
     }
 
     membership$grp <- groupIndices

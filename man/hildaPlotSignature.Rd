@@ -13,7 +13,7 @@ hildaPlotSignature(hildaResult, sigOrder = NULL, colorList = NULL, ...)
 
 \item{colorList}{a vector of color for mutational exposures barplots}
 
-\item{...}{Other arguments passed on to methods}
+\item{...}{additional arguments passed on to visPMS}
 }
 \value{
 a plot object containing all mutational signatures

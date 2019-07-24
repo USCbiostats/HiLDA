@@ -24,3 +24,6 @@ Changes in version 0.99.8 (2019-06-22)
 
 Changes in version 0.99.9 (2019-07-24)
 + Fix the issues commented by the Bioconductor reviewer
+
+Changes in version 0.99.10 (2019-07-24)
++ Fix the issues commented by the Bioconductor reviewer

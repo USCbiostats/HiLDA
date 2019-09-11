@@ -10,11 +10,34 @@ on the independent model proposed by Shiraishi's et al.
 
 ## Paper
 
-- Shiraishi et al. A simple model-based approach to inferring and visualizing 
-cancer mutation signatures, bioRxiv, 
-doi: [http://dx.doi.org/10.1101/019901](http://dx.doi.org/10.1101/019901).
+- **Yang Z**, Pandey P, Shibata D, Conti DV, Marjoram P, Siegmund KD. 2019. HiLDA: a statistical approach to investigate differences in mutational signatures. PeerJ 7:e7557 https://doi.org/10.7717/peerj.7557
 
-- **Zhi Yang**, Priyatama Pandey, Darryl Shibata, David V. Conti, Paul Marjoram, 
-Kimberly D. Siegmund. HiLDA: a statistical approach to investigate differences 
-in mutational signatures, bioRxiv, doi: https://doi.org/10.1101/577452 
+## Installation 
 
+Now you can download the pacakge from Bioconductor https://bioconductor.org/packages/devel/bioc/html/HiLDA.html
+
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# The following initializes usage of Bioc devel
+BiocManager::install(version='devel')
+
+BiocManager::install("HiLDA")
+```
+
+## Documentation
+
+To view documentation for the version of this package installed in your system, start R and enter:
+
+```
+browseVignettes("HiLDA")
+```
+
+## An introduction to HiLDA
+
+Tutorials: 
+https://bioconductor.org/packages/devel/bioc/vignettes/HiLDA/inst/doc/HiLDA.html
+
+R Scripts:
+https://bioconductor.org/packages/devel/bioc/vignettes/HiLDA/inst/doc/HiLDA.R

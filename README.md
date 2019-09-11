@@ -41,3 +41,6 @@ https://bioconductor.org/packages/devel/bioc/vignettes/HiLDA/inst/doc/HiLDA.html
 
 R Scripts:
 https://bioconductor.org/packages/devel/bioc/vignettes/HiLDA/inst/doc/HiLDA.R
+
+## Funding
+This work was supported by NCI grant numbers 5P30 CA014089 and P01 CA196569. 

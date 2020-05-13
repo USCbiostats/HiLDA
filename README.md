@@ -1,5 +1,6 @@
 # HiLDA: "*Hi*erarchical *L*atent *D*irichlet *A*llocation" 
-
+[![](https://img.shields.io/badge/release%20version-1.0.0-green.svg)](https://www.bioconductor.org/packages/HiLDA) 
+[![](https://img.shields.io/badge/download-718/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/HiLDA) 
 
 ## Introduction
 

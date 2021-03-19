@@ -1,7 +1,7 @@
 # HiLDA: "*Hi*erarchical *L*atent *D*irichlet *A*llocation" 
 [![](https://img.shields.io/badge/release%20version-1.3.0-green.svg)](https://www.bioconductor.org/packages/HiLDA) 
 [![](https://img.shields.io/badge/download-1060/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/HiLDA) 
-[![](https://img.shields.io/badge/doi-10.7717/peerj.7557-yellow.svg)](https://doi.org/10.7717/peerj.7557)
+[![](https://img.shields.io/badge/doi-10.7717/peerj.7557-yellow.svg)](https://doi.org/10.7717/peerj.7557) [![](https://raw.githubusercontent.com/USCbiostats/badges/master/tommy-image-badge.svg)](https://image.usc.edu)
 
 ## Introduction
 

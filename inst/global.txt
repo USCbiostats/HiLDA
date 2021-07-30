@@ -8,7 +8,7 @@ model {
       for(n in 1:N1[i]){
         xG1[n,1,i] ~ dcat(pStates1[1, 1:numStates, sCat1[i,n]])
         for(h in 1:numFlank){
-          xG1[n,h+1,i] ~ dcat(pStates2[h, 1:numFlank, sCat1[i,n]])
+          xG1[n,h+1,i] ~ dcat(pStates2[h, 1:4, sCat1[i,n]])
         }
         sCat1[i,n] ~ dcat(p1[i,1:K])
       }
@@ -22,7 +22,7 @@ model {
       for(n in 1:N2[i]){
         xG2[n,1,i] ~ dcat(pStates1[1, 1:numStates,sCat2[i,n]])
         for(h in 1:numFlank){
-          xG2[n,h+1,i] ~ dcat(pStates2[h, 1:numFlank, sCat2[i,n]])
+          xG2[n,h+1,i] ~ dcat(pStates2[h, 1:4, sCat2[i,n]])
         }
         sCat2[i,n] ~ dcat(p2[i,1:K])
       }
@@ -51,7 +51,7 @@ model {
 
       ## flanking bases
       for(w in 1:numFlank){
-        pStates2[w,1:numFlank,k] ~ ddirch(gammas2[1:numFlank])
+        pStates2[w,1:4,k] ~ ddirch(gammas2[1:4])
       }
     }
 
@@ -60,7 +60,7 @@ model {
         gammas1[q] <- 1
     }
 
-    for(h in 1:numFlank){
+    for(h in 1:4){
         gammas2[h] <- 1
     }
 

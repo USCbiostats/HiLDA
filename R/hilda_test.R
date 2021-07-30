@@ -113,11 +113,11 @@ hildaTest <- function(inputG, numSig, refGroup, useInits=NULL, sigOrder=NULL,
         
         inits <- list(list(pStates1=array(sig[1, , sigOrder],
                                           dim=c(1, 6, numSig)),
-                           pStates2=array(sig[2:nFeature, seq_len(4),
+                           pStates2=array(sig[2:(1 + nFlanking ), seq_len(4),
                                 sigOrder], dim=c(nFlanking, 4, numSig))),
                       list(pStates1=array(sig[1, , sigOrder],
                                           dim=c(1, 6, numSig)),
-                           pStates2=array(sig[2:nFeature, seq_len(4),
+                           pStates2=array(sig[2:(1 + nFlanking ), seq_len(4),
                                 sigOrder], dim=c(nFlanking, 4, numSig))))
         
         

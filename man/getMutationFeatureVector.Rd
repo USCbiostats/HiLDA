@@ -5,8 +5,14 @@
 \title{Get mutation feature vector from context sequence data and reference and
 alternate allele information}
 \usage{
-getMutationFeatureVector(context, ref_base, alt_base, strandInfo = NULL,
-  numBases, type)
+getMutationFeatureVector(
+  context,
+  ref_base,
+  alt_base,
+  strandInfo = NULL,
+  numBases,
+  type
+)
 }
 \arguments{
 \item{context}{the context sequence data around the mutated position. This

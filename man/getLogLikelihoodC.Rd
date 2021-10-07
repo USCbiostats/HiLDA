@@ -4,8 +4,19 @@
 \alias{getLogLikelihoodC}
 \title{Calculate the value of the log-likelihood for given parameters}
 \usage{
-getLogLikelihoodC(vPatternList, vSparseCount, vF, vQ, fdim, signatureNum,
-  sampleNum, patternNum, samplePatternNum, isBackground, vF0)
+getLogLikelihoodC(
+  vPatternList,
+  vSparseCount,
+  vF,
+  vQ,
+  fdim,
+  signatureNum,
+  sampleNum,
+  patternNum,
+  samplePatternNum,
+  isBackground,
+  vF0
+)
 }
 \arguments{
 \item{vPatternList}{The list of possible mutation features (converted 

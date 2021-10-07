@@ -5,8 +5,14 @@
 \title{Plot both mutation signatures and their mutational exposures from
 pmsignature output for more than two groups}
 \usage{
-pmMultiBarplot(inputG, inputParam, sigOrder = NULL, groupIndices,
-  sortSampleNum = TRUE, charSize = 3)
+pmMultiBarplot(
+  inputG,
+  inputParam,
+  sigOrder = NULL,
+  groupIndices,
+  sortSampleNum = TRUE,
+  charSize = 3
+)
 }
 \arguments{
 \item{inputG}{a MutationFeatureData S4 class output by the pmsignature.}

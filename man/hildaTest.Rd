@@ -5,8 +5,18 @@
 \title{Apply HiLDA to statistically testing the global difference in burdens of
 mutation signatures between two groups}
 \usage{
-hildaTest(inputG, numSig, refGroup, useInits = NULL, sigOrder = NULL,
-  nIter = 2000, nBurnin = 0, pM1 = 0.5, localTest = TRUE, ...)
+hildaTest(
+  inputG,
+  numSig,
+  refGroup,
+  useInits = NULL,
+  sigOrder = NULL,
+  nIter = 2000,
+  nBurnin = 0,
+  pM1 = 0.5,
+  localTest = TRUE,
+  ...
+)
 }
 \arguments{
 \item{inputG}{a MutationFeatureData S4 class output by the pmsignature.}

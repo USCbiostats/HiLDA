@@ -4,8 +4,17 @@
 \alias{updateMstepFQC}
 \title{Update the parameter F and Q (M-step in the EM-algorithm)}
 \usage{
-updateMstepFQC(vPatternList, vSparseCount, nTheta, fdim, signatureNum,
-  sampleNum, patternNum, samplePatternNum, isBackground)
+updateMstepFQC(
+  vPatternList,
+  vSparseCount,
+  nTheta,
+  fdim,
+  signatureNum,
+  sampleNum,
+  patternNum,
+  samplePatternNum,
+  isBackground
+)
 }
 \arguments{
 \item{vPatternList}{The list of possible mutation features (converted 

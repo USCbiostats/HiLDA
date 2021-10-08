@@ -5,9 +5,16 @@
 \title{Plot both mutation signatures and their mutational exposures from
 pmsignature output}
 \usage{
-pmBarplot(inputG, inputParam, sigOrder = NULL, refGroup = NULL,
-  sortSampleNum = TRUE, refName = "Control", altName = "Case",
-  charSize = 3)
+pmBarplot(
+  inputG,
+  inputParam,
+  sigOrder = NULL,
+  refGroup = NULL,
+  sortSampleNum = TRUE,
+  refName = "Control",
+  altName = "Case",
+  charSize = 3
+)
 }
 \arguments{
 \item{inputG}{a MutationFeatureData S4 class output by the pmsignature.}

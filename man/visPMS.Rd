@@ -4,8 +4,16 @@
 \alias{visPMS}
 \title{visualize probabisitic mutaiton signature for the independent model}
 \usage{
-visPMS(vF, numBases, baseCol = NA, trDir = FALSE, charSize = 5,
-  isScale = FALSE, alpha = 2, charLimit = 0.25)
+visPMS(
+  vF,
+  numBases,
+  baseCol = NA,
+  trDir = FALSE,
+  charSize = 5,
+  isScale = FALSE,
+  alpha = 2,
+  charLimit = 0.25
+)
 }
 \arguments{
 \item{vF}{a matrix for mutation signature}

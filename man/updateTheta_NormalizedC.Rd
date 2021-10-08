@@ -6,8 +6,19 @@
 summation of each group sums to 1 (E-step),
 also calculate the current log-likelihood value}
 \usage{
-updateTheta_NormalizedC(vPatternList, vSparseCount, vF, vQ, fdim,
-  signatureNum, sampleNum, patternNum, samplePatternNum, isBackground, vF0)
+updateTheta_NormalizedC(
+  vPatternList,
+  vSparseCount,
+  vF,
+  vQ,
+  fdim,
+  signatureNum,
+  sampleNum,
+  patternNum,
+  samplePatternNum,
+  isBackground,
+  vF0
+)
 }
 \arguments{
 \item{vPatternList}{The list of possible mutation features (converted to a 

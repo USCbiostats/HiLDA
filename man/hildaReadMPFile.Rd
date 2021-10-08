@@ -4,8 +4,13 @@
 \alias{hildaReadMPFile}
 \title{Read the raw mutation data of Mutation Position Format.}
 \usage{
-hildaReadMPFile(infile, numBases = 3, trDir = FALSE,
-  bs_genome = NULL, txdb_transcript = NULL)
+hildaReadMPFile(
+  infile,
+  numBases = 3,
+  trDir = FALSE,
+  bs_genome = NULL,
+  txdb_transcript = NULL
+)
 }
 \arguments{
 \item{infile}{the path for the input file for the mutation data of Mutation

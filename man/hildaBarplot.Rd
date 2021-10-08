@@ -5,9 +5,16 @@
 \title{Read the raw mutation data with the mutation feature vector format,
   estimate and plot both mutation signatures and their fractions}
 \usage{
-hildaBarplot(inputG, hildaResult, sigOrder = NULL, refGroup,
-  sortSampleNum = TRUE, refName = "Control", altName = "Case",
-  charSize = 3)
+hildaBarplot(
+  inputG,
+  hildaResult,
+  sigOrder = NULL,
+  refGroup,
+  sortSampleNum = TRUE,
+  refName = "Control",
+  altName = "Case",
+  charSize = 3
+)
 }
 \arguments{
 \item{inputG}{a MutationFeatureData S4 class output by the pmsignature.}

@@ -4,8 +4,13 @@
 \alias{pmgetSignature}
 \title{Obtain the parameters for mutation signatures and memberships}
 \usage{
-pmgetSignature(mutationFeatureData, K, numInit = 10, tol = 1e-04,
-  maxIter = 10000)
+pmgetSignature(
+  mutationFeatureData,
+  K,
+  numInit = 10,
+  tol = 1e-04,
+  maxIter = 10000
+)
 }
 \arguments{
 \item{mutationFeatureData}{the mutation data (MutationFeatureData class 

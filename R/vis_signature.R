@@ -207,9 +207,9 @@ visPMS <- function(vF, numBases, baseCol=NA, trDir=FALSE, charSize=5,
         values=c("A"=baseCol[1], "C"=baseCol[2], "G"=baseCol[3],
                    "T"=baseCol[4], "+"=baseCol[5], "-"=baseCol[6],
                    arrow="#A8A8A8")) +
-      guides(fill=FALSE) +
-      guides(colour=FALSE) +
-      guides(size=FALSE) +
+      guides(fill="none") +
+      guides(colour="none") +
+      guides(size="none") +
       theme(axis.text=element_blank(),
             axis.ticks=element_blank(),
             panel.background=element_blank(),

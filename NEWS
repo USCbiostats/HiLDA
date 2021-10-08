@@ -33,3 +33,6 @@ Changes in version 0.99.11 (2019-09-10)
 
 Changes in version 1.7.1 (2020-10-07)
 + Update the man files 
+
+Changes in version 1.7.2 (2020-10-07)
++ Fix warnings in unit tests

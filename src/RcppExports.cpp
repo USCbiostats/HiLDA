@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // updateTheta_NormalizedC
 NumericVector updateTheta_NormalizedC(NumericVector vPatternList, NumericVector vSparseCount, NumericVector vF, NumericVector vQ, NumericVector fdim, int signatureNum, int sampleNum, int patternNum, int samplePatternNum, bool isBackground, NumericVector vF0);
 RcppExport SEXP _HiLDA_updateTheta_NormalizedC(SEXP vPatternListSEXP, SEXP vSparseCountSEXP, SEXP vFSEXP, SEXP vQSEXP, SEXP fdimSEXP, SEXP signatureNumSEXP, SEXP sampleNumSEXP, SEXP patternNumSEXP, SEXP samplePatternNumSEXP, SEXP isBackgroundSEXP, SEXP vF0SEXP) {

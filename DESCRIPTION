@@ -8,7 +8,7 @@ Imports: R2jags, abind, cowplot, grid, forcats, stringr,
          BSgenome.Hsapiens.UCSC.hg19, BiocGenerics, tidyr, grDevices, stats,
          TxDb.Hsapiens.UCSC.hg19.knownGene, utils, methods, Rcpp
 Suggests: knitr, rmarkdown, testthat, BiocStyle
-Version: 1.7.2
+Version: 1.8.0
 Date: 2021-10-07
 Authors@R: c(person("Zhi", "Yang", email = "zyang895@gmail.com", 
              role = c("aut", "cre")),

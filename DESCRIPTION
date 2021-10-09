@@ -2,27 +2,27 @@ Package: HiLDA
 Type: Package
 Title: Conducting statistical inference on comparing the mutational exposures of 
     mutational signatures by using hierarchical latent Dirichlet allocation 
-Depends: R(>= 3.6), ggplot2
+Depends: R(>= 4.1), ggplot2
 Imports: R2jags, abind, cowplot, grid, forcats, stringr,
          GenomicRanges, S4Vectors, XVector, Biostrings, GenomicFeatures,
          BSgenome.Hsapiens.UCSC.hg19, BiocGenerics, tidyr, grDevices, stats,
-         TxDb.Hsapiens.UCSC.hg19.knownGene, utils, methods, Rcpp, rjags
+         TxDb.Hsapiens.UCSC.hg19.knownGene, utils, methods, Rcpp
 Suggests: knitr, rmarkdown, testthat, BiocStyle
-Version: 1.7.4
-Date: 2021-10-07
+Version: 1.7.5
+Date: 2021-10-08
 Authors@R: c(person("Zhi", "Yang", email = "zyang895@gmail.com", 
              role = c("aut", "cre")),
              person("Yuichi", "Shiraishi", email = "friend1ws@gmail.com", 
              role = "ctb"))
 Description: A package built under the Bayesian framework of applying 
-    hierarchical latent Dirichlet allocation to statistically test whether the 
+    hierarchical latent Dirichlet allocation. It statistically tests whether the 
     mutational exposures of mutational signatures (Shiraishi-model signatures) 
-    are different between two groups.
+    are different between two groups. The package also provides inference and visualization. 
 License: GPL-3
 URL: https://github.com/USCbiostats/HiLDA,
      https://doi.org/10.1101/577452
 BugReports: https://github.com/USCbiostats/HiLDA/issues
-SystemRequirements: JAGS 4.2.0
+SystemRequirements: JAGS 4.0.0
 biocViews: Software, SomaticMutation, Sequencing, StatisticalMethod, Bayesian
 RoxygenNote: 7.1.2
 LinkingTo: Rcpp

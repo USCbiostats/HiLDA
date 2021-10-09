@@ -19,7 +19,7 @@ hildaBarplot(
 \arguments{
 \item{inputG}{a MutationFeatureData S4 class output by the pmsignature.}
 
-\item{hildaResult}{a rjags class output by HiLD.}
+\item{hildaResult}{a rjags class output by HiLDA.}
 
 \item{sigOrder}{the order of signatures if needed (default: NULL).}
 

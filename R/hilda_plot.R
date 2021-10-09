@@ -88,7 +88,7 @@ hildaPlotSignature <- function(hildaResult, sigOrder=NULL, colorList = NULL,
 #'   estimate and plot both mutation signatures and their fractions
 #'
 #' @param inputG a MutationFeatureData S4 class output by the pmsignature.
-#' @param hildaResult a rjags class output by HiLD.
+#' @param hildaResult a rjags class output by HiLDA.
 #' @param sigOrder the order of signatures if needed (default: NULL).
 #' @param refGroup the samples in the reference group (default: NULL).
 #' @param sortSampleNum whether to sort plots by number of mutations

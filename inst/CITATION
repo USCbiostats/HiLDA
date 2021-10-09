@@ -1,19 +1,15 @@
-citHeader("To cite package 'HiLDA' in publications use:")
+citHeader("To cite HiLDA in publications use:")
 
-year <- sub("-.*", "", meta$Date)
-note <- sprintf("R package version %s", meta$Version)
-
-bibentry(bibtype ="Article",
-         title = "HiLDA: a statistical approach to investigate differences in 
-                  mutational signatures",
-         author =  c(person("Zhi", "Yang"),
-                     person("Priyatama", "Pandey"),
-                     person("Darryl", "Shibata"),
-                     person("David V.", "Conti"),
-                     person("Paul", "Marjoram"), 
-                     person("Kimberly", "Siegmund")),
-         year = 2019,
-         journal = "PeerJ",
-         url = "https://doi.org/10.7717/peerj.7557"
-         )
-         
+citEntry(
+  entry    = "Article",
+  title = "HiLDA: a statistical approach to investigate differences in mutational signatures",
+  author = "Yang, Zhi and Pandey, Priyatama and Shibata, Darryl and Conti, David V and Marjoram, Paul and Siegmund, Kimberly D",
+  journal = "PeerJ",
+  volume = "7",
+  pages = "e7557",
+  year = "2019",
+  publisher = "PeerJ Inc.",
+  url = "https://doi.org/10.7717/peerj.7557",
+  textVersion = paste(
+  )
+)

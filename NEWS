@@ -45,4 +45,8 @@ Changes in version 1.7.4 (2020-10-08)
 + Add citation file
 
 Changes in version 1.7.5 (2020-10-08)
-+ Update R version dependency from 3.6 to 4.1.
++ Update R version dependency from 3.6 to 4.1
+
+
+Changes in version 1.7.6 (2020-10-13)
++ Trigger bioc build 
